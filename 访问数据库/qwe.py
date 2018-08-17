@@ -1,0 +1,5 @@
+name,age,sex,tel=input('请输入要插入的姓名，年龄，性别，之间用空格分开：').split()
+print(name)
+print(age)
+print(sex)
+print(tel)
