@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        img {
+            display: block;
+        }
+
+        body {
+            margin: 0px;
+        }
+
+        #small {
+            position: relative;
+            left: 30px;
+            top: 30px;
+            width: 400px;
+            height: 250px;
+            /* border: 2px solid red; */
+            float: left;
+
+        }
+
+        #s_img {
+            width: 400px;
+            height: 250px;
+        }
+
+        #big {
+            float: left;
+            position: relative;
+            /* top: 30px;
+            left: 650px; */
+            width: 500px;
+            height: 500px;
+            overflow: hidden;
+            display: none;
+            /* border: 2px solid red; */
+            margin-left: 60px;
+            margin-top: 30px;
+        }
+
+        #move {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(25, 68, 158, .4);
+            display: none;
+        }
+
+        #b_img {
+            position: absolute;
+            left: 0px;
+            top: 0px;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var small = document.getElementById("small");
+            var s_img = document.getElementById("s_img");
+            var big = document.getElementById("big");
+            var b_img = document.getElementById("b_img")
+            var move = document.getElementById("move");
+
+            // 鼠标移动事件
+            small.onmousemove = function (e) {
+                var e = e || window.event;
+                this.style.cursor = 'move';
+                // 得到鼠标位置，并赋值给中间的盒子
+                var left = e.clientX - this.offsetLeft - move.offsetWidth / 2;
+                var top = e.clientY - this.offsetTop - move.offsetHeight / 2;
+                // 限制上下左右
+                left = (left < 0 ? 0 : left);
+                left = (left > this.offsetWidth - move.offsetWidth ? this.offsetWidth - move.offsetWidth : left);
+                top = (top < 0 ? 0 : top);
+                top = (top > this.offsetHeight - move.offsetHeight ? this.offsetHeight - move.offsetHeight :
+                    top);
+                move.style.left = left + 'px';
+                move.style.top = top + 'px';
+
+                var big_left = (left / (this.offsetWidth - move.offsetWidth)) * (big.offsetWidth - b_img.offsetWidth);
+                var big_top = (top / (this.offsetHeight - move.offsetHeight)) * (big.offsetHeight - b_img.offsetHeight);
+
+                b_img.style.left = big_left + 'px';
+                b_img.style.top = big_top + 'px';
+
+            }
+
+            // 鼠标移入事件，显示移动框和放大框
+            small.onmouseover = function () {
+                move.style.display = 'block'
+                big.style.display = 'block'
+            }
+
+            // 鼠标移出事件，移动框和放大框消失
+            small.onmouseout = function () {
+                move.style.display = 'none'
+                big.style.display = 'none'
+            }
+
+        }
+    </script>
+</head>
+
+<body>
+    <div id="small">
+        <img src="./images/2-small.jpg" alt="" id="s_img">
+        <div id="move"></div>
+    </div>
+    <div id="big">
+        <img src="./images/2.jpg" alt="" id="b_img">
+    </div>
+</body>
+
+</html>

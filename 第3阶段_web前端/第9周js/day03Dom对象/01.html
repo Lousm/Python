@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        window.onload = function(){
+            var im=document.getElementsByTagName("img")
+            for(let i=0;i<im.length;i++){
+                im[i].onclick= function(){
+                    var a =this.title;
+                    alert(a);
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <img src="../../第8周html/day05/JD/images/ad-l.png" alt="" title="图2">
+    <img src="../../第8周html/day05/JD/images/ad-r.jpg" alt="" title="图1">
+</body>
+</html>

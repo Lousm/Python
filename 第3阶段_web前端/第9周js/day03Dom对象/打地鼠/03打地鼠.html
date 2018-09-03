@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #big {
+            width: 480px;
+            height: 480px;
+            background-color: rgb(207, 125, 2);
+            margin: 0px auto;
+        }
+
+        .xiao {
+            width: 150px;
+            height: 150px;
+            background-color: rgb(20, 119, 0);
+            float: left;
+            margin: 5px;
+            background-image: url("./images/keng.jpg");
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+        }
+        h1{
+            display: inline-block;
+        }
+    </style>
+
+    <script>
+        // 当有图片的时候点击，分数加一，同时图片消失
+        // 产生1-9随机数确定哪个格子出地鼠
+        window.onload = function () {
+            var sum = 0;
+            var pp = document.getElementById("fenshu")
+            var xiao_div = document.getElementsByClassName("xiao");
+            for (var i = 0; i < xiao_div.length; i++) {
+                xiao_div[i].onclick = function () {
+                    // this.style.backgroundColor = "rgb(20, 119, 0)";
+                    if (window.getComputedStyle(this, null).backgroundColor === "rgb(0, 0, 255)") {
+                        this.style.backgroundColor = "rgb(20, 119, 0)";
+                        this.style.backgroundImage = "url('./images/keng.jpg')";
+                        // 计数
+                        sum++;
+                        pp.innerHTML = sum;
+
+                    }
+                    console.log(window.getComputedStyle(this, null).backgroundColor);
+
+                }
+            }
+        }
+        var xiao_div = document.getElementsByClassName("xiao");
+        // 控制地鼠多长时间后出来
+        var i = 0;
+        var j = 0;
+        var arr = [];
+
+        function b() {
+            setTimeout("b()", 1000);
+            var ran_num = parseInt(Math.random() * 9 + 1);
+            console.log(ran_num + "出地鼠");
+            xiao_div[ran_num - 1].style.backgroundColor = "blue";
+            xiao_div[ran_num -1].style.backgroundImage = "url('./images/dishu.jpg')";
+            // 出来地鼠的位置放入数组（以便消除）
+            arr[i] = ran_num;
+            i++;
+            a();
+            // setTimeout("a(ran_num)",1000);
+        }
+        // 从数组里去位置，地鼠自动下去
+        function a() {
+            // 第一个只有一个时，先不消失，等到有第二个时，再把第一个消失
+            if (arr.length != 1) {
+                xiao_div[arr[j] - 1].style.backgroundColor = "rgb(20, 119, 0)";
+                xiao_div[arr[j] -1].style.backgroundImage = "url('./images/keng.jpg')";
+
+                j++;
+            }
+            console.log(arr[j] + "还原");
+        }
+    </script>
+</head>
+
+<body>
+    <button onclick="b()">开始</button>
+    <br>
+    <h1>分数：</h1>
+    <h1 id="fenshu">0</h1>
+    <div id="big">
+        <div class="xiao"></div>
+        <div class="xiao"></div>
+        <div class="xiao"></div>
+        <div class="xiao"></div>
+        <div class="xiao"></div>
+        <div class="xiao"></div>
+        <div class="xiao"></div>
+        <div class="xiao"></div>
+        <div class="xiao"></div>
+
+    </div>
+
+</body>
+
+</html>

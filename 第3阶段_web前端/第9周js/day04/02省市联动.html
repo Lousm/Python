@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #fa {
+            width: 500px;
+            height: 100%;
+            margin: 0px auto;
+        }
+
+        select {
+            width: 100px;
+            height: 20px;
+            float: left;
+            margin-right: 5px;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var sheng_fa = document.getElementById("sheng");
+            var sheng = document.getElementsByTagName("option");
+            var shi_fa = document.getElementById("shi");
+            console.log(sheng.length);
+            var shi = new Array(5);
+            shi[1] = ['朝阳区', '密云区', '通州区', '昌平区', '海淀区']
+            shi[2] = ['郑州市', '洛阳市', '开封市', '新乡市', '焦作市']
+            shi[3] = ['菏泽市', '烟台市', '济南市']
+            shi[4] = ['保定市', '廊坊市', '唐山市', '张家口市', '秦皇岛']
+            sheng_fa.onchange = function () {
+                shi_fa.options.length = 0;
+                shi_fa.removeAttribute('disabled');
+                var sheng_id = this.value;
+                if (sheng_id == 0) {
+                    shi_fa.setAttribute('disabled', true);
+                } else {
+                    for (var i = 0; i < shi[sheng_id].length; i++) {
+                        var opi = document.createElement('option');
+                        var text = document.createTextNode(shi[sheng_id][i]);
+                        opi.appendChild(text);
+                        shi_fa.appendChild(opi);
+                    }
+                }
+
+            }
+        }
+
+
+        // console.log(sheng.);
+        // for(var i=0;i<sheng.l){}
+    </script>
+</head>
+
+<body>
+    <div id="fa">
+        <select name="" id="sheng">
+            <option value="0">--请选择--</option>
+            <option value="1">北京</option>
+            <option value="2">河南</option>
+            <option value="3">山东</option>
+            <option value="4">河北</option>
+        </select>
+        <select name="" id="shi" disabled="true">
+
+        </select>
+    </div>
+</body>
+
+</html>

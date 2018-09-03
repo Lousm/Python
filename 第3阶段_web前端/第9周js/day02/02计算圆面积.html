@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            width: 100%;
+        }
+        #d {
+            width: 0px;
+            height: 50px;
+            background-color: aqua;
+            border-radius: 50%;
+        }
+
+        button {
+            display: block;
+            width: 100px;
+            /* position: absolute;
+            left: 50%; */
+            margin: 0px auto;
+        }
+    </style>
+
+    <script>
+        function aa() {
+            var r = prompt("请输入半径（单位：像素）");
+            var di = document.getElementById("d");
+            // getComputedStyle(di,)[width]
+            di.style.width = r + "px";
+            di.style.height = r + "px";
+        }
+        function bb() {
+            var di = document.getElementById("d");
+            di.style.backgroundColor="red";
+        }
+    </script>
+</head>
+
+<body>
+    <button onclick="aa()">点我画圆</button>
+    <div id="d" onclick="bb()"></div>
+
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script>
+        var arr=new Array(5);
+        var top =-1;
+       
+        // 压栈
+        function addstack(){
+            var data=prompt();
+            arr[top++]=data;
+            asd(arr);
+            console.log(arr);
+            // return trun;
+        }
+        // 弹出
+        function jianstack() {
+            // var data=prompt();
+            // arr[top--];
+            
+            console.log(arr[top--]);
+            asd(arr);
+            console.log(arr);
+            // return arr[top--];
+        }
+        function asd(arr){
+            for(var i=0;i<arr.length();i++){
+                console.log(arr[i]);
+            }
+        }
+    </script>
+</head>
+<body>
+    <button onclick="addstack()">压栈</button>
+    <button onclick="jianstack()">弹出</button>
+</body>
+</html>

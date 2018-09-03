@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #d{
+            width: 0px;
+            height: 200px;
+            background-color: aqua;
+        }
+    </style>
+    <script>
+        
+        function aa() {
+            // document.write(123);
+            document.getElementById("d").style.width=200+"px";
+            document.getElementById("d").innerHTML="adfwef";
+        }
+    </script>
+</head>
+<body>
+    <div id="d">北京欢迎你</div>
+    <button onclick="aa()">点我设置</button>
+</body>
+</html>
