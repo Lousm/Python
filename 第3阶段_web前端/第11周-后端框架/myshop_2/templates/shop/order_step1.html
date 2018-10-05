@@ -1,0 +1,209 @@
+<!doctype html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>无标题文档</title>
+    {% include 'shop/yangshi.html' %}
+</head>
+
+<body>
+<!-- 公共头部 -->
+<!--头部-->
+<div class="header_w wrap">
+    <div class="header cont">
+        <div class="fl">
+            <font>欢迎来小U商城</font>
+            <a href="#" alt="">请登录</a><span></span>
+            <a href="#" alt="">免费注册</a>
+        </div>
+        <div class="fr header_r">
+            <a href="#" alt="">我的订单</a><span></span>
+            <a href="#" alt="" class="moblieApp">移动APP</a><span></span>
+            <a href="#" alt="">网站地图</a><span></span>
+            <a href="#" alt="" class="paddingR0">退出</a>
+            <div class="mobileApp_QR">
+                <img src="{% static 'shop/images/mobileApp_QR.jpg' %}" width="140" height="141">
+                <a href="#" class="iphone"><i></i>iphone下载</a>
+                <a href="#" class="android"><i></i>Android下载</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--头部 end -->
+
+<!--头部 end -->
+
+<div class="order_head_info cont clearfix">
+    <a href="#" alt="" class="fl"><img src="{% static 'shop/images/u_logo.jpg' %}" width="210" height="42"></a><span
+        class="header_title">购物车</span>
+    <div class="order_pro clearfix">
+        <span class="pro_active"><b>1</b>我的购物车</span>
+        <span class="pro_next"><b>2</b>提交结算</span>
+        <span class="pro_next"><b>3</b>提交成功</span>
+    </div>
+</div>
+
+<!--购物车清单-->
+<div class="order1_c cont">
+    <form>
+        <!-- 购物车清单内容 -->
+        <dl>
+            <dt>
+                <span class="order1_h1"><label class="order1_checkbox order1_checkbox_total"><i></i>全选<input
+                        type="checkbox" id="order3_all"></label></span>
+                <span class="order1_h2">商品</span>
+                <span class="order1_h3">单价</span>
+                <span class="order1_h4">购买数量</span>
+                <span class="order1_h5">小计</span>
+                <span class="order1_h6">操作</span>
+            </dt>
+            {% for cart in cart_list %}
+                <dd class="active" id="dd_{{ cart.id }}">
+        	<span class="order1_d1">
+                <label class="order1_checkbox">
+                <i  {% if cart.checked == 1 %}
+                    class="checked"
+                {% endif %}></i>
+                <input type="checkbox" id="order3_all" value="{{ cart.id }}" name="checked"
+                       onclick="getnum({{ cart.id }})"
+                        {% if cart.checked == 1 %}
+                       checked {% endif %} >
+                </label>
+            </span>
+                    <span class="order1_d2">
+                <div class="list_goods fl">
+                    <a href="#"><img src="{{ cart.commodity_id.commodity_img_set.filter.first.path }}" width="66"
+                                     height="66"></a>
+                    <p class="list_goods_name"><a href="#">{{ cart.commodity_id.name }}</a></p>
+                </div>
+            </span>
+                    <span class="order1_d3 order1_h3">￥{{ cart.commodity_id.price }}</span>
+                    <span class="order1_d4 order1_h4">
+                        <div class="amount_change">
+                            <b class="invalid" onclick="jiajian(1,{{ cart.id }},{{ cart.commodity_id.price }})">-</b>
+                        <input type="text" value="{{ cart.number }}" id="num_{{ cart.id }}">
+                            <b onclick="jiajian(2,{{ cart.id }},{{ cart.commodity_id.price }})">+</b>
+                        </div>
+                    </span>
+                    <span class="order1_d5 order1_h5"><font class="gwc_price"
+                                                            id="zj_{{ cart.id }}">{% widthratio cart.commodity_id.price 1 cart.number %}</font></span>
+                    <span class="order1_h6 order1_d6"><a href="javaScript:" onclick="dell({{ cart.id }})">删除</a><a
+                            href="#">移入收藏夹</a></span>
+                </dd>
+            {% endfor %}
+
+
+        </dl>
+        <!-- 购物车结算 -->
+        <div class="order1_balance clearfix">
+            <div class="fl"><span class="order1_h1"><label class="order1_checkbox order1_checkbox_total"><i></i>全选<input
+                    type="checkbox" id="order3_all"></label></span><a href="#">删除选中的商品</a></div>
+            <div class="fr order1_bar">
+                <span class="order1_barl fl">已选择<em class="colorB11">0</em>件商品</span>
+                <p class="fr">
+                    <span>总价：￥ <font id="zongjia">{{ zongjia }}</font> </span>
+                    <span>优惠：￥0.00</span>
+                    <span>合计：￥<font class="price" id="heji">{{ zongjia }}</font></span>
+                </p>
+            </div>
+        </div>
+        <div class="order1_b"><a href="#" class="hover_btn1">继续购物</a><a href="#" class="hover_btn2">提交结算</a></div>
+    </form>
+</div>
+<!-- footer  -->
+{% include 'shop/footer.html' %}
+
+
+<script>
+    {#执行购买数量加减#}
+
+    function jiajian(i, id, price) {
+        var num = $('#num_' + id).val()
+        if (i == 1) {
+            if (Number(num) > 1) {
+                $('#num_' + id).val(Number(num) - 1)
+                $('#zj_' + id).html((Number(num) - 1) * price)
+            }
+        } else {
+
+            $('#num_' + id).val(Number(num) + 1)
+            $('#zj_' + id).html((Number(num) + 1) * price)
+        }
+        getnum(id)
+    }
+
+    {#获取商品数量#}
+
+    function getnum(id) {
+        var num = $('#num_' + id).val()
+
+        total_price(id, num)
+
+    }
+
+    {##控制总价#}
+
+    function total_price(id, num){
+        var lis = new Array()
+        $('input:checkbox[name=checked]:checked').each(function (obj) {
+            var id = $(this).val();
+            console.log(id)
+            lis.push(id)
+        })
+        num = num
+        id = id
+
+        {#将选中的复选框转为字符串#}
+        cart_lis = lis.join(',')
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "/shop/update_show_cart/",
+            data: {'cart_id_lis': cart_lis, 'num': num, 'id': id},
+            {##表单中的数据#}
+            {#data: $('#form1').serialize(),#}
+            dateType: "json", //服务器返回的数据类型
+            async: false,
+            beforeSend: function (xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            },
+            success: function (data) {
+                $('#heji').html(data.data)
+                $('#zongjia').html(data.data)
+
+            },
+        });
+    }
+
+    {#删除#}
+
+    function dell(id) {
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "/shop/dell_show_cart/",
+            data: {'id': id},
+            {##表单中的数据#}
+            {#data: $('#form1').serialize(),#}
+            dateType: "json", //服务器返回的数据类型
+            async: false,
+            beforeSend: function (xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            },
+            success: function (data) {
+                if (data.data == 0) {
+                    alert(id + '删除成功')
+                    $('#dd_' + id).remove()
+                    {#$('#tr' + id).remove()#}
+                }
+
+            },
+        });
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>全球生鲜卖家管理后台页面</title>
+    {% include 'shop_manage/yangshi.html' %}
+
+
+    {#  引入Ztree 静态资源 #}
+    <link rel="stylesheet" href="{% static  'shop_manage/admin/css/demo.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static  'shop_manage/admin/css/zTreeStyle/zTreeStyle.css' %}" type="text/css">
+    <script type="text/javascript" src="{% static  'shop_manage/admin/js/jquery.ztree.core.js' %}"></script>
+
+
+    <script type="text/javascript" src="{% static  'shop_manage/admin/js/kindeditor/kindeditor-all-min.js' %}"></script>
+    <script type="text/javascript" src="{% static  'shop_manage/admin/js/kindeditor/lang/zh-CN.js' %}"></script>
+
+</head>
+
+<body>
+<div class="x-body layui-anim layui-anim-up">
+    <form class="layui-form" method="post" action="{% url 'do_add_floor_shop_manage' %}" enctype="multipart/form-data">
+        <div class="layui-form-item">
+            <label for="L_email" class="layui-form-label">
+                <span class="x-red">*</span>楼层名称
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="L_email" name="floor_name" required=""
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="L_email" class="layui-form-label">
+                链接地址
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="L_email" name="url_"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="L_email" class="layui-form-label">
+                上传图片
+            </label>
+            <div class="layui-input-inline">
+                <input type="file" name="img">
+            </div>
+        </div>
+
+        {% csrf_token %}
+
+        <div class="layui-form-item">
+            <label for="L_repass" class="layui-form-label">
+            </label>
+            <button class="layui-btn" lay-filter="add" lay-submit="">
+                增加
+            </button>
+        </div>
+    </form>
+</div>
+
+</body>
+
+</html>

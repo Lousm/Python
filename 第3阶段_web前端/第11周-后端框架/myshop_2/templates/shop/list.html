@@ -1,0 +1,140 @@
+<!doctype html>
+{% load static %}
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>详情</title>
+{% include 'shop/header.html' %}
+</head>
+<!--  content start-->
+<div class="l_select cont clearfix">
+    <p class="site"><a href="#" alt="">首页</a>&nbsp;>&nbsp;<a href="#" alt="">品牌女装</a>&nbsp;>&nbsp;<a href="#" alt=""
+                                                                                                     class="current">年份季节:2015年春季
+        <span>×</span></a></p>
+    <div>
+        <dl>
+            <dt><a href="#" alt=""><i>></i>当季流行</a></dt>
+            <dd>
+                <span><a href="#" alt="">2016当季新品</a></span>
+                <span><a href="#" alt="">商场同款</a></span>
+                <span><a href="#" alt="">独家首发</a></span>
+                <span><a href="#" alt="">时尚连衣裙</a></span>
+                <span><a href="#" alt="">针织衫</a></span>
+                <span><a href="#" alt="">印花卫衣</a></span>
+                <span><a href="#" alt="">衬衫</a></span>
+                <span><a href="#" alt="">短外套</a></span>
+                <span><a href="#" alt="">短外套</a></span>
+            </dd>
+            <dd class="more"><span>更多</span></dd>
+        </dl>
+        <dl>
+            <dt><a href="#" alt=""><i>></i>特色服装</a></dt>
+            <dd>
+                <span><a href="#" alt="">中老年女装</a></span>
+                <span><a href="#" alt="">大码女装</a></span>
+                <span><a href="#" alt="">时尚套装</a></span>
+                <span><a href="#" alt="">休闲运动套装</a></span>
+                <span><a href="#" alt="">职业套装</a></span>
+                <span><a href="#" alt="">设计师原创品牌</a></span>
+                <span><a href="#" alt="">民族服饰</a></span>
+                <span><a href="#" alt="">舞台服装</a></span>
+                <span><a href="#" alt="">婚纱</a></span>
+                <span><a href="#" alt="">2016当季新品</a></span>
+                <span><a href="#" alt="">商场同款</a></span>
+                <span><a href="#" alt="">独家首发</a></span>
+                <span><a href="#" alt="">时尚连衣裙</a></span>
+                <span><a href="#" alt="">针织衫</a></span>
+                <span><a href="#" alt="">印花卫衣</a></span>
+                <span><a href="#" alt="">衬衫</a></span>
+            </dd>
+            <dd class="more"><span>更多</span></dd>
+        </dl>
+    </div>
+</div>
+
+<div class="l_content cont clearfix">
+    <!--商品推荐-->
+    <div class="sptj fl">
+        <h4><a href="#" alt="">商品推荐</a></h4>
+        <ul class="listI fl">
+            <li>
+                <a href="#" alt=""><img src="" width="130" height="130" alt=""></a>
+                <a href="#" alt="">海信（Hisense)<br/>LED55EC760UC 55英寸曲面</a>
+                <span class="price">￥4999.00</span>
+            </li>
+            <li>
+                <a href="#" alt=""><img src="" width="130" height="130" alt=""></a>
+                <a href="#" alt="">海信（Hisense)<br/>LED55EC760UC 55英寸曲面</a>
+                <span class="price">￥4999.00</span>
+            </li>
+            <li>
+                <a href="#" alt=""><img src="" width="130" height="130" alt=""></a>
+                <a href="#" alt="">海信（Hisense)<br/>LED55EC760UC 55英寸曲面</a>
+                <span class="price">￥4999.00</span>
+            </li>
+            <li>
+                <a href="#" alt=""><img src="" width="130" height="130" alt=""></a>
+                <a href="#" alt="">海信（Hisense)<br/>LED55EC760UC 55英寸曲面</a>
+                <span class="price">￥4999.00</span>
+            </li>
+            <li>
+                <a href="#" alt=""><img src="" width="130" height="130" alt=""></a>
+                <a href="#" alt="">海信（Hisense)<br/>LED55EC760UC 55英寸曲面</a>
+                <span class="price">￥4999.00</span>
+            </li>
+
+        </ul>
+    </div>
+    <!--商品推荐 end -->
+    <div class="l_list fr">
+        <div class="l_list_t clearfix">
+            <div class="l_lt_l fl">
+                <span>综合排序<i class="down">&nbsp;</i></span>
+                <span class="border0">人气<i class="up">&nbsp;</i></span>
+                <span>价格<i class="up">&nbsp;</i></span>
+            </div>
+            <div class="l_lt_r fr">
+                <b>共614件商品</b>
+                <b><font>1</font>/11</b>
+                <span><</span>
+                <span class="border0 active">></span>
+            </div>
+        </div>
+        <ul class="listL">
+            {% for datum in data %}
+                <li>
+                    <a href="/shop/show_details/{{ datum.id }}" alt=""><img src="{{ datum.commodity_img_set.first.path }}" width="195" height="200"></a>
+                    <span class="price">￥{{ datum.price }}</span>
+                    <a href="/shop/show_details/{{ datum.id }}" alt="">{{ datum.name }}<font class="colorB11">不要停止你的嘴，不要辜负</font></a>
+                    <a href="/shop/show_details/{{ datum.id }}" alt="" class="comment">已有<b>3.2万+</b>人评价</a>
+                    <div class="listL_b"><a href="#" class="gwc_ad"><i>&nbsp;</i>加入购物车</a><a href="#"
+                                                                                             class="collect">喜欢</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <!-- pages -->
+        <div class="pages">
+            {% if data.has_previous %}
+                <a class="pages_pre" href="?{{ page_url }}&p={{ data.previous_page_number }}" title="上一页">上一页</a>
+            {% endif %}
+            {% for page_num in data.paginator.page_range %}
+                {% if data.number == page_num %}
+                    <a href="?{{ page_url }}&p={{ page_num }}" class="active">{{ page_num }}</a>
+                {% else %}
+                    <a href="?{{ page_url }}&p={{ page_num }}">{{ page_num }}</a>
+                {% endif %}
+            {% endfor %}
+            {% if data.has_next %}
+                <a href="?{{ page_url }}&p={{ data.next_page_number }}" class="pages_next" title="下一页">下一页</a>
+            {% endif %}
+            <span>共{{ data.number }}页</span>
+        </div>
+    </div>
+</div>
+<!-- footer  -->
+{% include 'shop/footer.html' %}
+
+</body>
+</html>

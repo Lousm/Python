@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>显示数据</title>
+    <script src="{% static 'boot/js/jquery-2.0.2.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static  'boot/css/bootstrap.css' %}">
+    <script src="{% static 'boot/js/bootstrap.js' %}"></script>
+    <style>
+        input{
+            border:0px;
+            background-color:rgba(0,0,0,0)
+        }
+    </style>
+    <script>
+        con=0
+        function asd(){
+            var i=document.getElementsByClassName('i1')
+            var a=document.getElementById('a1')
+            
+            for (var j=0;j<i.length;j++){
+                if (con%2===0){
+                a.innerHTML='保存'
+                i[j].removeAttribute("readOnly");
+                i[j].style.border='1px'
+                i[j].style.backgroundColor='rgb(255,255,255)'
+{#                    {% url 'save' %}#}
+            } else {
+                i[j].setAttribute("readOnly","true");
+                i[j].style.border='0px'
+                i[j].style.backgroundColor='rgba(0,0,0,0)'
+                a.innerHTML='修改'
+            }
+            }
+
+            con=con+1
+        }
+    </script>
+</head>
+
+
+<body>
+    <div class="container">
+        <div class="row">
+            <h3>显示数据</h3>
+            <a href="{% url 'add' %}" class="btn btn-primary">添加</a>
+            <hr>
+
+            <table class="table table-hover">
+                <tr>
+                    <th>ID</th>
+                    <th>姓名</th>
+                    <th>学号</th>
+                    <th>年龄</th>
+                    <th>简介</th>
+                    <th>操作</th>
+                </tr>
+                {% for list in lists %}
+                <tr class="t1">
+                    <td>{{ list.id }}</td>
+                    <td><input class="i1" type="text" value={{ list.name }} readOnly="true"></td>
+                    <td><input class="i1" type="text" value={{ list.xuehao }} readOnly="true"></td>
+                    <td><input class="i1" type="text" value={{ list.age }} readOnly="true"></td>
+                    <td><input class="i1" type="text" value={{ list.jianjie }} readOnly="true"></td>
+                    <td>
+{#                        <a id="a1" href="#" onclick="asd()" class="btn btn-info">修改</a>#}
+                        <a id="a1" href="{% url 'edit' list.id %}" class="btn btn-info">修改</a>
+
+                        <a href="{% url 'dell' list.id %}" class="btn btn-danger">删除</a>
+                    </td>
+                <div>{{ foo }}</div>
+                </tr>
+
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,489 @@
+<!doctype html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>无标题文档</title>
+    {% include 'shop/header.html' %}
+</head>
+
+
+<p class="site cont">
+    {% for li in lis %}
+     <a href="#" alt="">{{ li.1 }}</a><span>&nbsp;>&nbsp;</span>
+    {% endfor %}
+
+
+
+</p>
+<div class="s_main1 cont clearfix">
+    <div class="s_m1r fr">
+        <h1>{{ data.name }}</h1>
+        <p class="s_m1r_p1"><span class="colorChange">【11.11提前抢】</span>雾霾强势来袭，别怕！京东陪你对抗雾霾！净化器+净水器享两件88折！部分型号加送滤芯！滤芯两件8折！关爱您和家人的健康！<a
+                href="#" target="_blank" class="colorChange">点击查看活动详情！</a></p>
+        <div class="s_m1r_div1">
+            <em class="s_m1_collect"><i class="star_w">&nbsp;</i>收藏</em>
+            <p class="s_m1_price"><span>促 销 价</span><strong>￥{{ data.price }}</strong><font><i></i>降价通知</font></p>
+            <p class="s_m1_assess"><span>累计评价</span>&nbsp;<a href="#">7800+</a></p>
+            <p class="s_m1_carriage"><span>运    费</span>&nbsp;<b>满19包邮</b></p>
+        </div>
+        <div class="s_m1r_div2">
+            <div class="s_m1_amount">
+                <span>购买数量</span>
+                <div class="amount_change"><b class="invalid" onclick="jiajian(1)">-</b><input type="text" value="1"
+                                                                                               id="num"><b
+                        onclick="jiajian(2)">+</b></div>
+            </div>
+        </div>
+        <div class="s_m1r_div3">
+            <a href="javaScript:" target="_blank" class="addGoods" onclick="add_cart({{ data.id }})"><i>&nbsp;</i>加入购物车</a>
+            <a href="#" target="_blank" class="buyGoods">立即购买</a>
+        </div>
+    </div>
+
+    <!-- 放大镜  -->
+
+    <div class="imgBox fl" id="imgBox">
+        <div class="smallImg" id="small-box">
+            <div class="mark" id="mark"></div>
+            <div class="float-box" id="float-box"></div>
+            <img src="{{ data.commodity_img_set.first.path }}" width="420" height="420">
+            <div class="i_magnifier"><i class="i_shadow"></i><i>&nbsp;</i></div>
+        </div>
+        <div class="big_box" id="big-box"><img src="{{ data.commodity_img_set.first.path }}" width="420" height="420"/>
+        </div>
+        <div class="allImg_w">
+            <span class="d_pre"><i>&nbsp;</i></span>
+            <div class="allImg">
+                <ul>
+
+                    {% for datum in data.commodity_img_set.filter %}
+                        <li {% if forloop.counter == 1 %}
+                            class="current"
+                        {% endif %} ><a href="#" target="_blank"><img src="{{ datum.path }}" width="66"
+                                                                      height="66"/></a>
+                        </li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+            <span class="d_next"><i>&nbsp;</i></span>
+        </div>
+    </div>
+
+    <!-- 放大镜 end  -->
+</div>
+<div class="sucess_tips">
+    <div class="shadow"></div>
+    <div class="sucess_tips_c">
+        <i>&nbsp;</i>商品已成功加入购物车！
+        <a href="#" target="_blank">去结算</a>
+    </div>
+</div>
+
+
+<div class="cont s_main2 clearfix">
+    <!--商品推荐-->
+    <div class="sptj fl">
+        <h4><a href="#" alt="">商品推荐</a></h4>
+        <ul class="listI fl">
+            <li>
+                <a href="#" alt=""><img src="" width="130" height="130" alt=""></a>
+                <a href="#" alt="">海信（Hisense)<br/>LED55EC760UC 55英寸曲面</a>
+                <span class="price">￥4999.00</span>
+            </li>
+            <li>
+                <a href="#" alt=""><img src="" width="130" height="130" alt=""></a>
+                <a href="#" alt="">海信（Hisense)<br/>LED55EC760UC 55英寸曲面</a>
+                <span class="price">￥4999.00</span>
+            </li>
+            <li>
+                <a href="#" alt=""><img src="" width="130" height="130" alt=""></a>
+                <a href="#" alt="">海信（Hisense)<br/>LED55EC760UC 55英寸曲面</a>
+                <span class="price">￥4999.00</span>
+            </li>
+            <li>
+                <a href="#" alt=""><img src="" width="130" height="130" alt=""></a>
+                <a href="#" alt="">海信（Hisense)<br/>LED55EC760UC 55英寸曲面</a>
+                <span class="price">￥4999.00</span>
+            </li>
+            <li>
+                <a href="#" alt=""><img src="" width="130" height="130" alt=""></a>
+                <a href="#" alt="">海信（Hisense)<br/>LED55EC760UC 55英寸曲面</a>
+                <span class="price">￥4999.00</span>
+            </li>
+
+        </ul>
+    </div>
+
+    <!--商品推荐 end -->
+    <div class="s_m2_r fr">
+        <div class="tabBar" id="tabBar">
+            <div class="fixed_bg_t"></div>
+            <ul class="s_m2_rt_h">
+                <li class="active"><a href="javascript:;">商品介绍</a></li>
+                <li><a href="javascript:;">商品评价<span class="colorB11">(7000+)</span></a></li>
+                <li><a href="javascript:;">售后保障</a></li>
+                <li class="addGoods"><a href="#" target="_blank"
+                                        onclick="add_cart({{ data.id }})"><i>&nbsp;</i>加入购物车</a></li>
+            </ul>
+            <div class="fixed_bg_b"></div>
+        </div>
+        <!-- 商品详情 -->
+
+        <div class="s_m2_r_content s_details">
+
+            <div class="s_details clearfix">
+                <div class="s_d_nav fr">
+                    <b class="s_dr_line"></b>
+                    <ul>
+                        <li><a href="#" class="active"><i>&nbsp;</i>产品特色</a></li>
+                        <li><a href="#"><i>&nbsp;</i>产品功能</a></li>
+                        <li><a href="#"><i>&nbsp;</i>产品细节</a></li>
+                        <li><a href="#"><i>&nbsp;</i>产品信息</a></li>
+                    </ul>
+                </div>
+                <div class="s_dl fl">
+                    <div class="section">
+                        {% autoescape off %}
+                            {{ data.commodity_introduce_set.filter.first.content }}
+                        {% endautoescape %}
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- 商品详情 end -->
+
+    <!-- 商品评价 -->
+    <div class="s_m2_r_content s_review">
+        <div class="s_review_sum clearfix">
+            <span class="s_review_sl fl">98%</span>
+            <ul class="s_review_sm fl">
+                <li class="good"><font>好评(95%)</font><span><i>&nbsp;</i></span></li>
+                <li class="common"><font>中评(3%)</font><span><i>&nbsp;</i></span></li>
+                <li class="bad"><font>差评(2%)</font><span><i>&nbsp;</i></span></li>
+            </ul>
+            <a href="#" class="s_review_evalute fr">我要评价</a>
+        </div>
+        <div class="s_review_tab">
+            <span class="active">全部评价</span>
+            <span>好评</span>
+            <span>中评</span>
+            <span>差评</span>
+        </div>
+
+        <div class="s_review_tabDiv" style="display:block">
+            <div class="s_review_c">
+                <div class="s_review_cl fl">
+                    <span class="review_star"></span>
+                    <p>上身是针织的，腰围跟雪纺连接处是牛筋的，弹性很大，所以穿起来很轻松，也很舒服。 做工非常好，我仔细看下几遍，没发现有问题 跟图片一样，没有色差 客服很耐心，对他们的服务很满意</p>
+                </div>
+                <div class="s_review_cr fr">
+                    <span>漂***草（匿名）</span>
+                    <span class="review_date">2016-10-16 23:13</span>
+                </div>
+            </div>
+            <div class="s_review_c">
+                <div class="s_review_cl fl">
+                    <span class="review_star review_star1"></span>
+                    <p>上身是针织的，腰围跟雪纺连接处是牛筋的，弹性很大，所以穿起来很轻松，也很舒服。 做工非常好，我仔细看下几遍，没发现有问题 跟图片一样，没有色差 客服很耐心，对他们的服务很满意</p>
+                    <ul class="review_img">
+                        <li class="active"><img src="images/details_m2.jpg" width="46" height="46"><i>&nbsp;</i>
+                        </li>
+                        <li><img src="images/details_m1.jpg" width="46" height="46"><i>&nbsp;</i></li>
+                        <li><img src="images/details_m3.jpg" width="46" height="46"><i>&nbsp;</i></li>
+                        <li><img src="images/details_m2.jpg" width="46" height="46"><i>&nbsp;</i></li>
+                    </ul>
+                    <div class="review_img_l">
+                        <img src="">
+                    </div>
+                </div>
+                <div class="s_review_cr fr">
+                    <span>漂***草（匿名）</span>
+                    <span class="review_date">2016-10-16 23:13</span>
+                </div>
+            </div>
+            <div class="s_review_c">
+                <div class="s_review_cl fl">
+                    <span class="review_star review_star4"></span>
+                    <p>上身是针织的，腰围跟雪纺连接处是牛筋的，弹性很大，所以穿起来很轻松，也很舒服。 做工非常好，我仔细看下几遍，没发现有问题 跟图片一样，没有色差 客服很耐心，对他们的服务很满意</p>
+                </div>
+                <div class="s_review_cr fr">
+                    <span>漂***草（匿名）</span>
+                    <span class="review_date">2016-10-16 23:13</span>
+                </div>
+            </div>
+
+            <!-- pages -->
+            <div class="pages pagesR">
+                <a class="pages_pre" href="#" title="上一页">上一页</a><a href="#" class="active">1</a><a href="#">2</a><a
+                    href="#">3</a><a href="#">4</a><a href="#">5</a><span>…</span><a href="#" class="pages_next"
+                                                                                     title="下一页">下一页</a>
+            </div>
+        </div>
+        <div class="s_review_tabDiv">
+            <div class="s_review_c">
+                <div class="s_review_cl fl">
+                    <span class="review_star review_star5"></span>
+                    <p>上身是针织的，腰围跟雪纺连接处是牛筋的，弹性很大，所以穿起来很轻松，也很舒服。 做工非常好，我仔细看下几遍，没发现有问题 跟图片一样，没有色差 客服很耐心，对他们的服务很满意</p>
+                </div>
+                <div class="s_review_cr fr">
+                    <span>漂***草（匿名）</span>
+                    <span class="review_date">2016-10-16 23:13</span>
+                </div>
+            </div>
+            <div class="s_review_c">
+                <div class="s_review_cl fl">
+                    <span class="review_star review_star5"></span>
+                    <p>上身是针织的，腰围跟雪纺连接处是牛筋的，弹性很大，所以穿起来很轻松，也很舒服。 做工非常好，我仔细看下几遍，没发现有问题 跟图片一样，没有色差 客服很耐心，对他们的服务很满意</p>
+                    <ul class="review_img">
+                        <li class="active"><img src="images/details_m2.jpg" width="46" height="46"><i>&nbsp;</i>
+                        </li>
+                        <li><img src="images/details_m1.jpg" width="46" height="46"><i>&nbsp;</i></li>
+                        <li><img src="images/details_m3.jpg" width="46" height="46"><i>&nbsp;</i></li>
+                        <li><img src="images/details_m2.jpg" width="46" height="46"><i>&nbsp;</i></li>
+                    </ul>
+                    <div class="review_img_l">
+                        <img src="">
+                    </div>
+                </div>
+                <div class="s_review_cr fr">
+                    <span>漂***草（匿名）</span>
+                    <span class="review_date">2016-10-16 23:13</span>
+                </div>
+            </div>
+            <div class="s_review_c">
+                <div class="s_review_cl fl">
+                    <span class="review_star review_star4"></span>
+                    <p>上身是针织的，腰围跟雪纺连接处是牛筋的，弹性很大，所以穿起来很轻松，也很舒服。 做工非常好，我仔细看下几遍，没发现有问题 跟图片一样，没有色差 客服很耐心，对他们的服务很满意</p>
+                </div>
+                <div class="s_review_cr fr">
+                    <span>漂***草（匿名）</span>
+                    <span class="review_date">2016-10-16 23:13</span>
+                </div>
+            </div>
+            <div class="s_review_c">
+                <div class="s_review_cl fl">
+                    <span class="review_star review_star4"></span>
+                    <p>上身是针织的，腰围跟雪纺连接处是牛筋的，弹性很大，所以穿起来很轻松，也很舒服。 做工非常好，我仔细看下几遍，没发现有问题 跟图片一样，没有色差 客服很耐心，对他们的服务很满意</p>
+                </div>
+                <div class="s_review_cr fr">
+                    <span>漂***草（匿名）</span>
+                    <span class="review_date">2016-10-16 23:13</span>
+                </div>
+            </div>
+            <div class="s_review_c">
+                <div class="s_review_cl fl">
+                    <span class="review_star review_star4"></span>
+                    <p>上身是针织的，腰围跟雪纺连接处是牛筋的，弹性很大，所以穿起来很轻松，也很舒服。 做工非常好，我仔细看下几遍，没发现有问题 跟图片一样，没有色差 客服很耐心，对他们的服务很满意</p>
+                </div>
+                <div class="s_review_cr fr">
+                    <span>漂***草（匿名）</span>
+                    <span class="review_date">2016-10-16 23:13</span>
+                </div>
+            </div>
+
+            <!-- pages -->
+            <div class="pages pagesR">
+                <a class="pages_pre" href="#" title="上一页">上一页</a><a href="#" class="active">1</a><a href="#">2</a><a
+                    href="#">3</a><a href="#">4</a><a href="#">5</a><span>…</span><a href="#" class="pages_next"
+                                                                                     title="下一页">下一页</a>
+            </div>
+        </div>
+        <div class="s_review_tabDiv">
+            <div class="s_review_c">
+                <div class="s_review_cl fl">
+                    <span class="review_star review_star2"></span>
+                    <p>上身是针织的，腰围跟雪纺连接处是牛筋的，弹性很大，所以穿起来很轻松，也很舒服。 做工非常好，我仔细看下几遍，没发现有问题 跟图片一样，没有色差 客服很耐心，对他们的服务很满意</p>
+                </div>
+                <div class="s_review_cr fr">
+                    <span>漂***草（匿名）</span>
+                    <span class="review_date">2016-10-16 23:13</span>
+                </div>
+            </div>
+            <div class="s_review_c">
+                <div class="s_review_cl fl">
+                    <span class="review_star review_star3"></span>
+                    <p>上身是针织的，腰围跟雪纺连接处是牛筋的，弹性很大，所以穿起来很轻松，也很舒服。 做工非常好，我仔细看下几遍，没发现有问题 跟图片一样，没有色差 客服很耐心，对他们的服务很满意</p>
+                    <ul class="review_img">
+                        <li class="active"><img src="images/details_m2.jpg" width="46" height="46"><i>&nbsp;</i>
+                        </li>
+                        <li><img src="images/details_m1.jpg" width="46" height="46"><i>&nbsp;</i></li>
+                        <li><img src="images/details_m3.jpg" width="46" height="46"><i>&nbsp;</i></li>
+                        <li><img src="images/details_m2.jpg" width="46" height="46"><i>&nbsp;</i></li>
+                    </ul>
+                    <div class="review_img_l">
+                        <img src="">
+                    </div>
+                </div>
+                <div class="s_review_cr fr">
+                    <span>漂***草（匿名）</span>
+                    <span class="review_date">2016-10-16 23:13</span>
+                </div>
+            </div>
+            <div class="s_review_c">
+                <div class="s_review_cl fl">
+                    <span class="review_star review_star3"></span>
+                    <p>上身是针织的，腰围跟雪纺连接处是牛筋的，弹性很大，所以穿起来很轻松，也很舒服。 做工非常好，我仔细看下几遍，没发现有问题 跟图片一样，没有色差 客服很耐心，对他们的服务很满意</p>
+                </div>
+                <div class="s_review_cr fr">
+                    <span>漂***草（匿名）</span>
+                    <span class="review_date">2016-10-16 23:13</span>
+                </div>
+            </div>
+
+            <!-- pages -->
+            <div class="pages pagesR">
+                <a class="pages_pre" href="#" title="上一页">上一页</a><a href="#" class="active">1</a><a href="#">2</a><a
+                    href="#">3</a><a href="#">4</a><a href="#">5</a><span>…</span><a href="#" class="pages_next"
+                                                                                     title="下一页">下一页</a>
+            </div>
+        </div>
+        <div class="s_review_tabDiv">
+            <div class="s_review_c">
+                <div class="s_review_cl fl">
+                    <span class="review_star review_star1"></span>
+                    <p>上身是针织的，腰围跟雪纺连接处是牛筋的，弹性很大，所以穿起来很轻松，也很舒服。 做工非常好，我仔细看下几遍，没发现有问题 跟图片一样，没有色差 客服很耐心，对他们的服务很满意</p>
+                </div>
+                <div class="s_review_cr fr">
+                    <span>漂***草（匿名）</span>
+                    <span class="review_date">2016-10-16 23:13</span>
+                </div>
+            </div>
+            <div class="s_review_c">
+                <div class="s_review_cl fl">
+                    <span class="review_star review_star2"></span>
+                    <p>上身是针织的，腰围跟雪纺连接处是牛筋的，弹性很大，所以穿起来很轻松，也很舒服。 做工非常好，我仔细看下几遍，没发现有问题 跟图片一样，没有色差 客服很耐心，对他们的服务很满意</p>
+                    <ul class="review_img">
+                        <li class="active"><img src="images/details_m2.jpg" width="46" height="46"><i>&nbsp;</i>
+                        </li>
+                        <li><img src="images/details_m1.jpg" width="46" height="46"><i>&nbsp;</i></li>
+                        <li><img src="images/details_m3.jpg" width="46" height="46"><i>&nbsp;</i></li>
+                        <li><img src="images/details_m2.jpg" width="46" height="46"><i>&nbsp;</i></li>
+                    </ul>
+                    <div class="review_img_l">
+                        <img src="">
+                    </div>
+                </div>
+                <div class="s_review_cr fr">
+                    <span>漂***草（匿名）</span>
+                    <span class="review_date">2016-10-16 23:13</span>
+                </div>
+            </div>
+            <div class="s_review_c">
+                <div class="s_review_cl fl">
+                    <span class="review_star review_star1"></span>
+                    <p>上身是针织的，腰围跟雪纺连接处是牛筋的，弹性很大，所以穿起来很轻松，也很舒服。 做工非常好，我仔细看下几遍，没发现有问题 跟图片一样，没有色差 客服很耐心，对他们的服务很满意</p>
+                </div>
+                <div class="s_review_cr fr">
+                    <span>漂***草（匿名）</span>
+                    <span class="review_date">2016-10-16 23:13</span>
+                </div>
+            </div>
+
+            <!-- pages -->
+            <div class="pages pagesR">
+                <a class="pages_pre" href="#" title="上一页">上一页</a><a href="#" class="active">1</a><a href="#">2</a><a
+                    href="#">3</a><a href="#">4</a><a href="#">5</a><span>…</span><a href="#" class="pages_next"
+                                                                                     title="下一页">下一页</a>
+            </div>
+        </div>
+
+    </div>
+    <!-- 商品评价 end -->
+
+    <!-- 售后保障 -->
+    <div class="s_m2_r_content s_after_sale">
+        <p>本产品全国联保，享受三包服务，质保期为：一年质保
+            如因质量问题或故障，凭厂商维修中心或特约维修点的质量检测证明，享受7日内退货，15日内换货，15日以上在质保期内享受免费保修等三包服务！</p>
+        <br/><br/>
+        <p>售后服务电话 400-999-9999</p>
+        <br/><br/>
+        <h3>权利声明：</h3>
+        <p>京东上的所有商品信息、客户评价、商品咨询、网友讨论等内容，是京东重要的经营资源，未经许可，禁止非法转载使用。
+            注：本站商品信息均来自于合作方，其真实性、准确性和合法性由信息拥有者（合作方）负责。本站不提供任何保证，并不承担任何法律责任。
+        </p>
+        <h3>价格说明：</h3>
+        <p>京东价：京东价为商品的销售价，是您最终决定是否购买商品的依据。
+            划线价：商品展示的划横线价格为参考价，该价格可能是品牌专柜标价、商品吊牌价或由品牌供应商提供的正品零售价（如厂商指导价、建议零售价等）或该
+            商品在京东平台上曾经展示过的销售价；由于地区、时间的差异性和市场行情波动，品牌专柜标价、商品吊牌价等可能会与您购物时展示的不一致，该价格仅供您参考。
+            折扣：如无特殊说明，折扣指销售商在原价、或划线价（如品牌专柜标价、商品吊牌价、厂商指导价、厂商建议零售价）等某一价格基础上计算出的优惠比例或
+            优惠金额；如有疑问，您可在购买前联系销售商进行咨询。
+            异常问题：商品促销信息以商品详情页“促销”栏中的信息为准；商品的具体售价以订单结算页价格为准；如您发现活动商品售价或促销信息有异常，建议
+            购买前先联系销售商咨询。
+        <p>
+
+    </div>
+    <!-- 售后保障 end -->
+
+</div>
+</div>
+<!-- footer  -->
+{% include 'shop/footer.html' %}
+<script>
+    {##执行添加购物车#}
+
+    function add_cart(id) {
+        var num = $('#num').val()
+
+        {#$.post('/shop/add_cart/', {'num': num,'id':id},#}
+        {#    beforeSend: function (xhr, settings) {#}
+        {#            xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");#}
+        {#        },#}
+        {#    function (con) {#}
+        {#        if (con.status == 0){#}
+        {#            alert('添加成功')#}
+        {#        }#}
+        {#    }#}
+        {#)#}
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "/shop/add_cart/",
+            data: {'num': num, 'id': id},
+            {##表单中的数据#}
+            {#data: $('#form1').serialize(),#}
+            dateType: "json", //服务器返回的数据类型
+            async: false,
+            beforeSend: function (xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            },
+            success: function (con) {
+                if (con.status == 0) {
+                    alert("添加成功");
+                    {#window.location.reload();//刷新当前页面.#}
+                }
+                else {
+
+
+                    alert('您还没登陆');
+                }
+            },
+        });
+
+    }
+
+    {#执行购买数量加减#}
+
+    function jiajian(i) {
+        var num = $('#num').val()
+        if (i == 1) {
+            if (Number(num) > 1) {
+                $('#num').val(Number(num) - 1)
+            }
+
+        } else {
+            $('#num').val(Number(num) + 1)
+
+        }
+
+    }
+
+</script>
+
+</body>
+</html>

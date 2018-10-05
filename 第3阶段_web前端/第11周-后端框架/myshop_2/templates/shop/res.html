@@ -1,0 +1,171 @@
+{% extends 'shop/demo.html' %}
+{% block title %}
+    注册
+{% endblock %}
+{% block heard %}
+    <h1 style="position: relative;left: 120px;font-size: 50px">商城
+        <small style="position: relative;left: 120px;">欢迎注册</small>
+    </h1>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="row">
+            <form action="{% url 'do_res_shop' %}" method="post" class="form-horizontal">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">用户名</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputname3" name='username' placeholder="用户名"
+                               required onblur="username1()" data-toggle="tooltip" data-placement="right"
+                               title="用户名至少2位">
+                        <p id="id_username"></p> {% if request.session.error %}{{ request.session.error }}
+                    {% endif %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-4 control-label">密码</label>
+                    <div class="col-sm-4">
+                        {% if request.session.error %}
+                            <input type="password" class="form-control" id="inputPassword1" name='pswd' placeholder="密码"
+                                   required value="{{ pswd }}" pattern="/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$/" title="密码包含数字、字母、下划线，至少8位">
+                        {% else %}
+{#                            <input type="password" class="form-control" id="inputPassword1" name='pswd' placeholder="密码"#}
+{#                                   required pattern="/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,}$/" title="密码包含数字、字母、下划线，至少8位">#}
+                        <input type="password" class="form-control" id="inputPassword1" name='pswd' placeholder="密码"
+                                   required >
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-4 control-label">确认密码</label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" id="inputPassword2" name='pswd'
+                               placeholder="确认密码" required onblur="password2()" >
+{#                        <input type="password" class="form-control" id="inputPassword2" name='pswd'#}
+{#                               placeholder="确认密码" required onblur="password2()" pattern="/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{8,18}$/" >#}
+                        <p id="id_psw2"></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-4 control-label">验证码</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="yanzheng" name='yanzheng' placeholder="验证码"
+                               required style="width: 180px;display: inline-block" onblur="y()">
+                        <p id="id_yan"></p>
+                    </div>
+                    <div style="width: 135px;height: 55px;background-color: rgb(222,222,222);display: inline-block">
+                        <img src="{% url 'yzm_shop' %}" id="code_img" onclick="yan()">
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-10">
+                        <button type="submit" class="btn btn-primary" id="id_zhuce">注册</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })
+
+        function username1() {  //检测用户名是否重复
+            var username = $('#inputname3').val()
+            {#alert(username)#}
+            if (username == '') {  //没有输入则不检测
+                $('#id_username').html('')
+                return
+            }
+            if(username.length<2){
+                $('#id_username').html('用户名不正确！')
+                return
+            }else{
+                $('#id_username').html('')
+            }
+            $('[data-toggle="tooltip"]').tooltip()
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: '{% url 'username1_shop' %}',
+                data: {'username': username},
+                {##表单中的数据#}
+                {#data: $('#form1').serialize(),#}
+                dateType: "json", //服务器返回的数据类型
+                async: false,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    $('#id_username').html(data.data)
+                    if (data.status == 1) {
+                        $('#id_zhuce').attr('disabled', true)
+                    }
+                    else {
+                        $('#id_zhuce').attr('disabled', false)
+
+                    }
+                },
+            });
+        }
+
+        function password2() {    //判断第二次输入的密码与第一次是否相同
+            psw1 = $('#inputPassword1').val()
+            psw2 = $('#inputPassword2').val()
+            if (psw1 != psw2) {
+                $('#id_psw2').html('与第一次密码不一致！请重新输入')
+                $('#inputPassword2').val('')
+            } else {
+                $('#id_psw2').html('')
+            }
+        }
+
+        function y() {
+            var str = $('#yanzheng').val()
+            if ($('#yanzheng').val() == '') {
+                return
+            }
+            {#alert({{ request.session.yan }})#}
+            if (str.length != 5) {
+                $('#id_yan').html('请输入正确的验证码')
+                $('#id_zhuce').attr('disabled', true)
+                return
+            } else {
+                $('#id_yan').html('')
+            }
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: '{% url 'yzm_if_not_shop' %}',
+                data: {'yan': str},
+                {##表单中的数据#}
+                {#data: $('#form1').serialize(),#}
+                dateType: "json", //服务器返回的数据类型
+                async: false,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+
+                    if (data.status == 1) {
+                        $('#id_zhuce').attr('disabled', true)
+                        $('#id_yan').html(data.data)
+                    }else{
+                        $('#id_zhuce').attr('disabled', false)
+                    }
+
+                },
+            });
+
+
+        }
+
+        function yan() {
+            var timestamp = new Date().getTime()
+            $('#code_img').attr('src', "{% url 'yzm_shop' %}?" + timestamp)
+        }
+    </script>
+
+{% endblock %}

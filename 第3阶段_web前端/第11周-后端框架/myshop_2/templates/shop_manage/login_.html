@@ -1,0 +1,115 @@
+{% extends 'shop_manage/demo.html' %}
+{% load static %}
+{% block title %}
+    后台管理页面
+{% endblock %}
+
+{% block body %}
+    <body style=" width:100%;height: 683px;background-image: url('{% static "shop_manage/images/bg.png" %}');background-repeat: no-repeat;background-size: 100% 100%">
+    <div class="container">
+        <div class="row">
+            <form id="form2" class="form-horizontal">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-4 control-label">用户名</label>
+                    <div class="col-sm-4">
+
+                        <input type="text" class="form-control" id="inputname3" name='username' placeholder="用户名"
+                               required>
+                        <p id="id_uname_1"></p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-4 control-label">密码</label>
+
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" id="inputPassword1" name='pswd' placeholder="密码"
+                               required>
+                        <p id="id_uname"></p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-4 control-label">验证码</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" id="yanzheng" name='yanzheng' placeholder="验证码"
+                               required style="width: 180px;display: inline-block">
+                        <p id="id_yan"></p>
+                    </div>
+                    <div style="width: 135px;height: 55px;background-color: rgb(222,222,222);display: inline-block">
+                        <img src="{% url 'yzm_shop' %}" id="code_img" onclick="shuaxin()">
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-4 col-sm-10">
+                        <button type="button" class="btn btn-primary" onclick="denglu()">登录</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    </body>
+
+    <script>
+
+        denglu = function () {
+            if ($('#inputname3').val() == '') {
+                $('#id_uname_1').html('请输入用户名！')
+                return
+            }
+            else {
+                $('#id_uname_1').html('')
+
+            }
+            if ($('#inputPassword1').val() == '') {
+                $('#id_uname').html('请输入密码！')
+                return
+            }
+            else {
+                $('#id_uname').html('')
+
+            }
+            if ($('#yanzheng').val() == '') {
+                $('#id_yan').html('请输入验证码！')
+                return
+            }
+            else {
+                $('#id_yan').html('')
+
+            }
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "{% url 'do_login_shop' %}",
+                {#data: {'name': name, 'age': age, 'zhuanye': zhuanye,'clas':clas,'num':num},#}
+                {##表单中的数据#}
+                data: $('#form2').serialize(),
+                dateType: "json", //服务器返回的数据类型
+                async: false,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    if (data.status == 1) {
+                        alert(data.data)
+                    }
+                    else if (data.status == 2) {
+                        $('#id_yan').html(data.data)
+
+                    } else {
+                        {#window.location.href=" {% url 'login_1_shop' %}"#}
+                        {#alert(data.data)#}
+                    }
+                }
+            });
+        }
+
+
+        function shuaxin() {
+            var timestamp = new Date().getTime()
+            $('#code_img').attr('src', "{% url 'yzm_shop' %}?" + timestamp)
+        }
+
+{% endblock %}

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+{% include 'shop_manage/yangshi.html' %}
+<head>
+    <meta charset="UTF-8">
+    <title>全球生鲜卖家管理后台页面</title>
+
+
+    {#  引入Ztree 静态资源 #}
+    <link rel="stylesheet" href="{% static  'shop_manage/admin/css/demo.css' %}" type="text/css">
+    <link rel="stylesheet" href="{% static  'shop_manage/admin/css/zTreeStyle/zTreeStyle.css' %}" type="text/css">
+    <script type="text/javascript" src="{% static  'shop_manage/admin/js/jquery.ztree.core.js' %}"></script>
+</head>
+
+<body>
+<div class="x-body layui-anim layui-anim-up">
+    <form class="layui-form" method="post" action="{% url 'do_add_tyep_shop_manage' %}">
+        <div class="layui-form-item">
+            <label for="L_email" class="layui-form-label">
+                <span class="x-red">*</span>分类名称
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="L_email" name="name" required=""
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="L_username" class="layui-form-label">
+                上级分类
+            </label>
+            <div class="layui-input-inline">
+                <ul id="treeDemo" class="ztree"></ul>
+            </div>
+            <input type="hidden" name="parent_id" id="parent_id" value="0" />
+        </div>
+
+        <div class="layui-form-item">
+            <label for="L_repass" class="layui-form-label">
+            </label>
+            <button class="layui-btn" lay-filter="add" lay-submit="">
+                增加
+            </button>
+
+        </div>
+        {% csrf_token %}
+    </form>
+</div>
+
+
+</body>
+
+	<SCRIPT type="text/javascript">
+		<!--
+		var setting = {
+			data: {
+				simpleData: {
+					enable: true
+				}
+			},
+            callback: {
+                onClick: zTreeOnClick
+            }
+		};
+        {% autoescape off %}
+		var zNodes ={{ json_obj }};
+        {% endautoescape %}
+
+         function zTreeOnClick(event,treeId,treeNode,clickFlag){
+             if(clickFlag==1){
+                $('#parent_id').val(treeNode.id);
+             }else if(clickFlag == 0){
+                $('#parent_id').val(0);
+             }
+         }
+
+
+		$(document).ready(function(){
+			$.fn.zTree.init($("#treeDemo"), setting, zNodes);
+		});
+		//-->
+	</SCRIPT>
+
+
+
+</html>

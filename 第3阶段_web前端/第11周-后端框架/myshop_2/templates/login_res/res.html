@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+</head>
+
+<body>
+{% include 'bootcss.html' %}
+<div class="jumbotron">
+    <h1>注册</h1>
+    <a href="{% url 'login' %}" class="btn btn-primary">去登录</a>
+    <hr>
+    <div class="container">
+        <div class="row">
+
+            <form action="{% url 'do_res' %}" method="post" class="form-horizontal">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-sm-2 control-label">用户名</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputEmail3" name='username' placeholder="用户名"
+                               required> {% if request.session.error %}{{ request.session.error }}
+                    {% endif %}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">密码</label>
+                    <div class="col-sm-4">
+                        {% if request.session.error %}
+                            <input type="password" class="form-control" id="inputPassword3" name='pswd' placeholder="密码"
+                                   required value="{{ pswd }}">
+                        {% else %}
+                            <input type="password" class="form-control" id="inputPassword3" name='pswd' placeholder="密码"
+                                   required>
+                        {% endif %}
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3" class="col-sm-2 control-label">手机号</label>
+                    <div class="col-sm-4">
+                        {% if request.session.error %}
+                            <input type="text" class="form-control" id="inputPassword3" name='phone' placeholder="手机号"
+                                   required value="{{ phone }}">
+                        {% else %}
+                            <input type="text" class="form-control" id="inputPassword3" name='phone' placeholder="手机号"
+                                   required>
+                        {% endif %}
+
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <button type="submit" class="btn btn-success">注册</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

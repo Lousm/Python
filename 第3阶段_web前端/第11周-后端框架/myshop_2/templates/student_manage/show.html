@@ -1,0 +1,218 @@
+{% extends 'student_manage/demo.html' %}
+
+{% block title %}
+    学生信息
+{% endblock %}
+
+{% block body %}
+    {% include 'student_manage/hrard.html' %}
+    {% include 'student_manage/login_jiance.html' %}
+
+    <ul class="nav nav-tabs">
+        <li role="presentation"><a href="{% url 'index' %}">主页</a></li>
+        <li role="presentation"><a href="{% url 'yuedu' %}">阅读</a></li>
+        <li role="presentation"><a href="{% url 'yule' %}">娱乐</a></li>
+        <li role="presentation"><a href="{% url 'res' %}">注册</a></li>
+        {% if request.session.username %}
+            {#            #显示欢迎小标题##}
+            {% include 'student_manage/huanying_biaoti.html' %}
+            <li role="presentation"><a href="{% url 'add' %}">添加数据</a></li>
+            <li role="presentation" class="active"><a href="{% url 'show' %}">学生信息</a></li>
+
+        {% else %}
+            <div style="position: absolute;top: 122px;right:8px">
+                <h5>您还没 <a href="{% url 'login' %}">登录</a>~</h5>
+
+            </div>
+            <li role="presentation"><a href="{% url 'login' %}">登录</a></li>
+        {% endif %}
+    </ul>
+    <br>
+
+    <div class="container">
+        <div class="row">
+            <div id="tab">
+                <table class="table table-hover">
+                    <tr>
+                        <th>ID</th>
+                        <th>姓名</th>
+                        <th>学号</th>
+                        <th>性别</th>
+                        <th>年龄</th>
+                        <th>专业</th>
+                        <th>班级</th>
+                        <th>操作</th>
+                    </tr>
+                    {% for list in lists %}
+                        <tr id="tr{{ list.num }}">
+                            <td>{{ list.id }}</td>
+                            <td>{{ list.name }}</td>
+                            <td>{{ list.num }}</td>
+                            {% if list.sex == '1' %}
+                                <td>男</td>
+                            {% else %}
+                                <td>女</td>
+
+                            {% endif %}
+
+                            <td>{{ list.age }}</td>
+                            <td>{{ list.zhuanye }}</td>
+                            <td>{{ list.clas }}</td>
+                            <td>
+                                {#<a id="a1" href="{% url 'edit' list.id %}" class="btn btn-info">修改</a>#}
+                                {#                                <a id="a1" href="javascript:" onclick="xiugai({{ list.name }},{{ list.num }},{{ list.sex }},{{ list.age }},{{ list.zhuanye }},{{ list.clas }})"#}
+                                {#                                   class="btn btn-info">修改</a>#}
+                                <a id="a1" href="javascript:;" onclick="xiu({{ list.num }})"
+                                   class="btn btn-info">修改</a>
+                                <a href="javascript:;" onclick="del({{ list.num }})" class="btn btn-danger">删除</a>
+{#                                <input type="button" onclick="xiugai({{ list.num }})" id="bc" class="btn btn-info" value="修改">#}
+{#                            <input type="button" onclick="del({{ list.id }})" id="bc" class="btn btn-danger" value="删除">#}
+                            </td>
+
+                        </tr>
+
+                    {% endfor %}
+                </table>
+            </div>
+
+            <div id="xiugai " style="display: none">
+                <form class="form-horizontal" id="form1">
+                    {% csrf_token %}
+                    <input type="text" hidden value="" name="id">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">姓名</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="name" id="name" placeholder="姓名">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">学号</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="num" id="num" placeholder="学号"
+                                   readonly>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">性别</label>
+                        <div class="col-sm-5">
+                            <label class="radio-inline">
+                                <input type="radio" name="sex" value="1" checked> 男
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="sex" value="0"> 女
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">年龄</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="age" id="age" placeholder="年龄">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">专业</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="zhuanye" id="zhuanye" placeholder="专业">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">班级</label>
+                        <div class="col-sm-5">
+                            <input type="text" class="form-control" name="clas" id="clas" placeholder="班级">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <input type="button" onclick="baocun()" id="bc" class="btn btn-default" value="保存">
+                            <input type="button" onclick="fanhui()" id="bc" class="btn btn-default" value="返回">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+
+        var num_ = 0
+
+        function del(id) {
+
+            $.get('/student_manage/dell/' + id,
+                function (data) {
+                    if (data) {
+                        alert(id+'删除成功')
+                        $('#tr' + id).remove()
+                        {#$('#tr' + id).remove()#}
+                    } else {
+                        alert('删除失败')
+                    }
+                }
+            );
+        }
+
+        function xiu(num) {
+            tab = document.getElementById('tab')
+            xiugai = document.getElementById('xiugai')
+
+            tab.style.display = 'none'
+            xiugai.removeAttribute('style')
+
+            $.post('/student_manage/xiugai/', {'num': num},
+                function (con) {
+                    document.getElementsByName('name')[0].value = con.name
+                    document.getElementsByName('num')[0].value = num
+                    if (con.sex === 0) {
+                        document.getElementsByName('sex')[0].removeAttribute('checked')
+                        document.getElementsByName('sex')[1].setAttribute('checked')
+                    }
+                    document.getElementsByName('age')[0].value = con.age
+                    document.getElementsByName('zhuanye')[0].value = con.zhuanye
+                    document.getElementsByName('clas')[0].value = con.clas
+                }
+            )
+        }
+
+        function baocun() {
+            tab = document.getElementById('tab')
+            xiugai = document.getElementById('xiugai')
+            xiugai.style.display = 'none'
+            tab.removeAttribute('style')
+
+            $.ajax({
+                cache: false,
+                type: "POST",
+                url: "/student_manage/update/",
+                {#data: {'name': name, 'age': age, 'zhuanye': zhuanye,'clas':clas,'num':num},#}
+                {##表单中的数据#}
+                data: $('#form1').serialize(),
+                dateType: "json", //服务器返回的数据类型
+                async: false,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    var num = $("#num").val()
+                    obj = document.getElementById('tr' + num)
+                    obj.getElementsByTagName('td')[1].innerHTML = $("#name").val()
+                    obj.getElementsByTagName('td')[4].innerHTML = $("#age").val()
+                    obj.getElementsByTagName('td')[5].innerHTML = $("#zhuanye").val()
+                    obj.getElementsByTagName('td')[6].innerHTML = $("#clas").val()
+                    {#alert(obj)#}
+                    if (data.status == 'success') {
+                        alert("学号" + num + "修改成功");
+
+                        {#window.location.reload();//刷新当前页面.#}
+                    }
+                },
+            });
+        }
+
+        function fanhui() {
+            tab = document.getElementById('tab')
+            xiugai = document.getElementById('xiugai')
+            xiugai.style.display = 'none'
+            tab.removeAttribute('style')
+
+        }
+    </script>
+{% endblock %}
