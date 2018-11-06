@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>添加</title>
+    <script src="{% static 'boot/js/jquery-2.0.2.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static  'boot/css/bootstrap.css' %}">
+    <script src="{% static 'boot/js/bootstrap.js' %}"></script>
+</head>
+
+<body>
+    <div class="container">
+        {% block biaoti %}
+            <h3>添加数据</h3>
+
+        {% endblock %}
+        <a href="{% url 'shuju' %}" class="btn btn-primary">数据</a>
+
+
+        <hr>
+        {% block form %}
+            <form class="form-horizontal" action="{% url 'do_add' %}" method="post">
+        {% endblock %}
+
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">姓名</label>
+                <div class="col-sm-5">
+                    {% block name %}
+                        <input type="text" class="form-control" id="inputEmail3" name='name' placeholder="请输入姓名" required="required">
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">学号</label>
+                <div class="col-sm-5">
+                    {% block xuehao %}
+                        <input type="text" class="form-control" id="inputEmail3" name='xuehao' placeholder="请输入学号" required="required">
+
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">年龄</label>
+                <div class="col-sm-5">
+                    {% block age %}
+                        <input type="text" class="form-control" id="inputEmail3" name='age' placeholder="请输入年龄" required="required">
+
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">简介</label>
+                <div class="col-sm-5">
+                    {% block  jianjie%}
+                        <textarea class="form-control" rows="3" name='jianjie'></textarea>
+
+                    {% endblock %}
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-5">
+                    {% block but %}
+                        <button type="submit" class="btn btn-success">添加</button>
+
+                    {% endblock %}
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+
+</body>
+
+</html>

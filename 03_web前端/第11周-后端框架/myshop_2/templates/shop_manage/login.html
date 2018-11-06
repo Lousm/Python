@@ -1,0 +1,53 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>全球生鲜卖家管理后台页面</title>
+    {% include 'shop_manage/yangshi.html' %}
+
+</head>
+<body class="login-bg">
+    <div class="login layui-anim layui-anim-up">
+        <div class="message">全球生鲜卖家管理后台页面</div>
+        <div id="darkbannerwrap"></div>
+        
+        <form class="layui-form" id="form2">
+            {% csrf_token %}
+            <input name="username" placeholder="用户名"  type="text" lay-verify="required" class="layui-input" >
+            <hr class="hr15">
+            <input name="password" lay-verify="required" placeholder="密码"  type="password" class="layui-input">
+            <hr class="hr15">
+            <input value="登录" lay-submit lay-filter="login" style="width:100%;" type="button" onclick="denglu()">
+            <hr class="hr20" >
+        </form>
+    </div>
+
+    <script>
+        function denglu() {
+            $.ajax({
+                cache: false,
+                type: "post",
+                url: "{% url 'do_login_shop_manage' %}",
+                {#data: {'name': name, 'age': age, 'zhuanye': zhuanye,'clas':clas,'num':num},#}
+                {##表单中的数据#}
+                data: $('#form2').serialize(),
+                dateType: "json", //服务器返回的数据类型
+                async: false,
+                beforeSend: function (xhr, settings) {
+                    xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                },
+                success: function (data) {
+                    if (data.status == 1) {
+                        alert(data.data)
+                    }
+                    else {
+                        window.location.href=" {% url 'index_shop_manage' %}"
+                        {#alert(data.data)#}
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>

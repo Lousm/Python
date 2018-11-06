@@ -1,0 +1,202 @@
+<!doctype html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>无标题文档</title>
+    {% include 'shop/yangshi.html' %}
+</head>
+
+<body>
+
+<!-- 公共头部 -->
+<!--头部-->
+<div class="header_w wrap">
+    <div class="header cont">
+        <div class="fl">
+            <font>欢迎来小U商城</font>
+            <a href="#" target="_blank" alt="">请登录</a><span></span>
+            <a href="#" target="_blank" alt="">免费注册</a>
+        </div>
+        <div class="fr header_r">
+            <a href="#" target="_blank" alt="">我的订单</a><span></span>
+            <a href="#" target="_blank" alt="" class="moblieApp">移动APP</a><span></span>
+            <a href="#" target="_blank" alt="">网站地图</a><span></span>
+            <a href="#" target="_blank" alt="" class="paddingR0">退出</a>
+            <div class="mobileApp_QR">
+                <img src=" {% static 'shop/images/mobileApp_QR.jpg' %}" width="140" height="141">
+                <a href="#" target="_blank" class="iphone"><i></i>iphone下载</a>
+                <a href="#" target="_blank" class="android"><i></i>Android下载</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--头部 end -->
+
+<!--头部下方导航-->
+
+<div class="header_b cont">
+    <a href="#" target="_blank" alt="" class="fl"><img src="{% static 'shop/images/u_logo.jpg' %}" width="210"
+                                                       height="42"></a>
+    <div class="header_search fl">
+        <form>
+            <input type="text" value="空气净化器" class="header_text fl" onBlur="if(value==''){value='空气净化器'}"
+                   onFocus="if(value=='空气净化器')value='';">
+            <input type="submit" value="搜索" class="header_sub fr">
+        </form>
+    </div>
+    <!-- header-购物车  -->
+    <div class="header_gwc fr">
+        <a href="{% url 'show_cart_shop' %}" target="_blank" alt="" class="header_gwc_h"><i class="icon_gwc">&nbsp;</i>购物车<i class="i_num">10</i><b
+                class="bgfff">&nbsp;</b></a>
+        <div class="header_nogoods gwc_list">
+            <i>&nbsp;</i>你的购物车中还没有商品，赶紧选购吧
+        </div>
+        <div class="header_goods gwc_list">
+            <h6>最新加入的商品</h6>
+            <ul>
+                <li>
+                    <p class="gwc_r fr">
+                        <span class="gwc_price">￥0</span><font class="gwc_amount">×2</font><br/>
+                        <a href="#" class="gwc_delete">删除</a>
+                    </p>
+                    <img src="" width="49" height="49">
+                    <a href="#">碧然德（BRITA）过滤净水器 家用滤水壶 净水壶cdcdcd</a>
+                </li>
+                <li>
+                    <p class="gwc_r fr">
+                        <span class="gwc_price">￥0</span><font class="gwc_amount">×2</font><br/>
+                        <a href="#" class="gwc_delete">删除</a>
+                    </p>
+                    <img src="" width="49" height="49">
+                    <a href="#">碧然德（BRITA）过滤净水器 家用滤水壶 净水壶cdcdcd</a>
+                </li>
+                <li>
+                    <p class="gwc_r fr">
+                        <span class="gwc_price">￥4999.00</span><font class="gwc_amount">×2</font><br/>
+                        <a href="#" class="gwc_delete">删除</a>
+                    </p>
+                    <img src="" width="49" height="49">
+                    <a href="#">碧然德（BRITA）过滤净水器 家用滤水壶 净水壶cdcdcd</a>
+                </li>
+                <li>
+                    <p class="gwc_r fr">
+                        <span class="gwc_price">￥0</span><font class="gwc_amount">×2</font><br/>
+                        <a href="#" class="gwc_delete">删除</a>
+                    </p>
+                    <img src="" width="49" height="49">
+                    <a href="#">碧然德（BRITA）过滤净水器 家用滤水壶 净水壶cdcdcd</a>
+                </li>
+            </ul>
+            <div class="gwc_total">共<b>3</b>件商品 共计<b>￥10000.00</b><a href="#" class="fr">去结算</a></div>
+        </div>
+    </div>
+    <!-- header-购物车 end  -->
+</div>
+<div class="nav cont">
+    <!-- header-导航栏  -->
+    <div class="nav_r fr">
+        <a href="#" target="_blank" alt="">首页</a>
+        {% for type in type_list %}
+            <a href="#" target="_blank" alt="">{{ type.name }}</a>
+        {% endfor %}
+    </div>
+    <!-- header-导航栏 end  -->
+
+    <!-- header-左边分类导航  -->
+    <div class="nav_l fl">
+        <h3>全部商品分类</h3>
+        <ul class="nav_snav">
+            {% for type in type_list %}
+                <li><a href="#" target="_blank" alt=""><i>></i>{{ type.name }}</a></li>
+            {% endfor %}
+        </ul>
+        {% for two_list in all_data %}
+            <ul class="nav_snav_con">
+                {% for two_data in two_list %}
+                    <li>
+                        <h6><a href="#" target="_blank" alt="">{{ two_data.name }}&nbsp;></a></h6>
+                        <p>
+                            {% for three_data in two_data.list %}
+                                <a href="#" target="_blank" alt="">{{ three_data.name }}</a>
+                            {% endfor %}
+                        </p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+    </div>
+    <!-- header-左边分类导航 end  -->
+</div>
+
+<!--头部下方导航   end  -->
+<!-- 公共头部  end -->
+
+
+<!--首页banner-->
+
+<div class="wrap banner_w">
+    <ul class="imgs">
+        <li style="background:#ffdb64;">
+            <a href="#" target="_blank" alt=""><img src="{% static 'shop/images/zg_banner1.jpg' %}" width="990"
+                                                    height="450" title=""
+                                                    alt=""></a>
+        </li>
+        <li style="background:rgb(239, 24, 81);">
+            <a href="#" target="_blank" alt="">
+                <img src="{% static 'shop/images/zg_banner2.jpg' %}" width="990" height="450" title="" alt="">
+            </a>
+        </li>
+        <li style="background:rgb(74, 60, 126);;">
+            <a href="#" target="_blank" alt=""><img src="{% static 'shop/images/zg_banner3.png' %}" width="990"
+                                                    height="450" title=""
+                                                    alt=""></a>
+        </li>
+    </ul>
+    <div class="dot">
+        <div class="dotshadow">&nbsp;</div>
+        <ul></ul>
+    </div>
+    <div class="banner_tab">
+        <a href="javascript:;" class="pre"><b>&nbsp;</b><i><</i></a>
+        <a href="javascript:;" class="next"><b>&nbsp;</b><i>></i></a>
+    </div>
+</div>
+<!--首页banner   end  -->
+
+{% for flo in data %}
+
+    <div class="main main1 cont">
+        <div class="main_t clearfix">
+            <h2 class="fl"><a href="#" target="_blank" alt="">{{ flo.name }}</a></h2>
+        </div>
+        <div class="main_ml fl">
+            <a href="#" target="_blank" alt=""><img src="{{ flo.img_path }}" width="210"
+                                                    height="403" alt=""></a>
+        </div>
+        <ul class="main_mr listI fr">
+            {% for flo_comm in flo.home_floor_commodity_set.filter %}
+                <li>
+                    <a href="/shop/show_details/{{ flo_comm.commodity_id.id }}" target="_blank" alt=""><img
+                            src="{{ flo_comm.commodity_id.commodity_img_set.filter.first.path }}" width="130"
+                            height="130" alt=""></a>
+                    <a href="/shop/show_details/{{ flo_comm.commodity_id.id }}" target="_blank" alt="">{{ flo_comm.commodity_id.name }}</a>
+                    <span class="price">{{ flo_comm.commodity_id.price }}</span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endfor %}
+<div class="ind_ads">
+    <a href="#" target="_blank" alt=""><img src="{% static 'shop/images/zg_idn_ads.jpg' %}" width="1200" height="120"
+                                            alt=""></a>
+</div>
+
+
+<!-- footer  -->
+{% include 'shop/footer.html' %}
+
+
+</body>
+</html>

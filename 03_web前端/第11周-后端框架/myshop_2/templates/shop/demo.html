@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}
+        模板
+    {% endblock %}</title>
+</head>
+{% include 'bootcss.html' %}
+
+<div class="page-header " style="background-color: white;margin-top: 0px;padding-top: 20px">
+    {% block heard %}
+    {% endblock %}
+</div>
+
+<body style="background-color: rgb(246,246,246)">
+{% block body %}
+
+    <div class="jumbotron">
+        <h1>别看我，我只是个demo</h1>
+
+    </div>
+
+{% endblock %}
+</body>
+</html>

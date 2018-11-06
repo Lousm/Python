@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block title %}
+        <title>引入头部和尾部的组合</title>
+    {% endblock %}
+
+</head>
+<body>
+    {% include 'zhihu/heard.html' %}
+    {% block zhuti %}
+        <div>我是组合</div>
+    {% endblock %}
+
+    {% include 'zhihu/floot.html' %}
+</body>
+</html>

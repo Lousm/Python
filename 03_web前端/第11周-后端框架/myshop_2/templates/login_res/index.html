@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+</head>
+<body>
+{% include 'bootcss.html' %}
+<ul class="nav nav-tabs">
+    <li role="presentation" class="active"><a href="{% url 'index' %}">主页</a></li>
+    <li role="presentation"><a href="#">阅读</a></li>
+    <li role="presentation"><a href="#">娱乐</a></li>
+    {% if request.session.username %}
+        <li role="presentation"><a href="{% url 'xinxi' %}">个人信息</a></li>
+    {% endif %}
+</ul>
+<div class="jumbotron">
+    <h1>这是主页</h1>
+    {#  <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a></p>#}
+
+    <hr>
+    <div class="container">
+        <div class="row">
+            {% if request.session.username %}
+{#                #显示欢迎小标题#}
+                {% include 'login_res/huanying_biaoti.html' %}
+
+
+
+                <a href="{% url 'xinxi' %}" class="btn btn-info">个人信息</a><br><br>
+
+                <a href="{% url 'logout' %}" class="btn btn-info">注销</a>
+                <a href="{% url 'login' %}" class="btn btn-info">切换账号</a>
+            {% else %}
+                <div style="position: absolute;top: 5px;right:8px">
+                    <h5>您还没 <a href="{% url 'login' %}">登录</a>~</h5>
+
+                </div>
+
+                <a href="{% url 'login' %}" class="btn btn-primary">登录</a>
+                <a href="{% url 'res' %}" class="btn btn-primary">注册</a>
+
+                {{ request.session.username }}
+            {% endif %}
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

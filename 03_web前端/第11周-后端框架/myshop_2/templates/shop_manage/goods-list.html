@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>全球生鲜卖家管理后台</title>
+    {% include 'shop_manage/yangshi.html' %}
+    <script type="text/javascript" src="{% static  'shop_manage/admin/js/kindeditor/kindeditor-all-min.js' %}"></script>
+    <script type="text/javascript" src="{% static  'shop_manage/admin/js/kindeditor/lang/zh-CN.js' %}"></script>
+
+</head>
+
+<body class="layui-anim layui-anim-up">
+<div class="x-nav">
+      <span class="layui-breadcrumb">
+        <a href="">商品管理</a>
+        <a href="">商品列表</a>
+      </span>
+</div>
+<div class="x-body">
+    <div id="div1">
+        <div class="layui-row">
+            <form class="layui-form layui-col-md12 x-so" action="">
+                <input class="layui-input" placeholder="分类名称" name="name" id="name">
+                <input class="layui-input" placeholder="上级ID" name="parent_id" id="parent_id">
+                <button class="layui-btn" lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
+            </form>
+        </div>
+        <table class="layui-table">
+            <tr>
+                <th>商品id</th>
+                <th>商品名称</th>
+                <th>商品价格</th>
+                <th>商品数量</th>
+                <th>商品介绍</th>
+                <th>商品图片</th>
+                <th>操作</th>
+            </tr>
+
+            {% for datum in data %}
+                <tr id="tr{{ datum.id }}">
+                    <td>{{ datum.id }}</td>
+                    <td>{{ datum.name }}</td>
+                    <td>{{ datum.price }}</td>
+                    <td>{{ datum.number }}</td>
+                    <td>{{ datum.commodity_introduce_set.content }}</td>
+                    <td>
+                        {% for comm in datum.commodity_img_set.filter %}
+                            <img src="{{ comm.path }}"/>
+                        {% endfor %}
+
+                    </td>
+                    <td>
+                        <a href="javascript:;" onclick="xiu({{ datum.id }})" class="btn btn-info">编辑</a>
+                        <a href="javascript:;" onclick="shanchu({{ datum.id }})" class="btn btn-danger">删除</a>
+                    </td>
+                </tr>
+
+            {% endfor %}
+        </table>
+        <div class="page">
+            <div>
+                {% if data.has_previous %}
+
+                    <a class="prev" href="{% url 'admin_typeLis' %}?{{ page_url }}&p={{ data.previous_page_number }}">&lt;&lt;</a>
+                {% endif %}
+                {% for page_num in data.paginator.page_range %}
+                    {% if data.number == page_num %}
+                        <span class="current">{{ page_num }}</span>
+                    {% else %}
+                        <a class="num"
+                           href="{% url 'admin_typeLis' %}?{{ page_url }}&p={{ page_num }}">{{ page_num }}</a>
+                    {% endif %}
+                {% endfor %}
+                {% if data.has_next %}
+                    <a class="next"
+                       href="{% url 'admin_typeLis' %}?{{ page_url }}&p={{ data.next_page_number }}">&gt;&gt;</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div id="div2" style="display: none">
+        <form class="form-horizontal" id="form1">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">商品id</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="id_s" id="id_s" placeholder="ID" readonly>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">商品名称</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="name_" id="name_" placeholder="商品名称">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">商品价格</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="jiage" id="jiage" placeholder="商品价格">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">商品数量</label>
+                <div class="col-sm-5">
+                    <input type="text" class="form-control" name="num" id="num" placeholder="商品数量">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">商品介绍</label>
+                <div class="col-sm-5">
+                    {#                    <input type="text" class="form-control" name="addtime" id="addtime" placeholder="添加时间">#}
+
+
+                    <div class="layui-input-inline">
+                        <textarea name="content" id="content"></textarea>
+                    </div>
+
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="inputEmail3" class="col-sm-2 control-label">商品图片</label>
+                <div class="col-sm-5">
+                    {#                    <input type="text" class="form-control" name="adduser" id="adduser" placeholder="添加人">#}
+
+                    <table class="layui-table">
+                        <tr>
+                            <th>商品图片</th>
+                            <th>操作</th>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <input type="button" onclick="baocun()" id="bc" class="btn btn-default" value="保存">
+                    <input type="button" onclick="fanhui()" id="bc" class="btn btn-default" value="返回">
+                </div>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<script>
+
+    function shanchu(id) {
+        $.post('/shop_manage/dell/', {'id': id},
+            function (data) {
+                if (data.status == 0) {
+                    alert(id + '删除成功')
+                    $('#tr' + id).remove()
+                    {#$('#tr' + id).remove()#}
+                }
+            }
+        );
+    }
+
+    function xiu(id) {
+        div1 = document.getElementById('div1')
+        div2 = document.getElementById('div2')
+        div1.style.display = 'none'
+        div2.removeAttribute('style')
+
+        $.post('/shop_manage/xiugai/', {'id': id},
+            function (con) {
+                $("#id_s").val(id)
+                $("#name_").val(con.name)
+                $("#jiage").val(con.jiage)
+                $("#num").val(con.number)
+                $("#addtime").val(con.addtime)
+                $("#adduser").val(con.adduser)
+            }
+        )
+    }
+
+    function baocun() {
+        div1 = document.getElementById('div1')
+        div2 = document.getElementById('div2')
+        div2.style.display = 'none'
+        div1.removeAttribute('style')
+
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "/shop_manage/update/",
+            {#data: {'name': name, 'age': age, 'zhuanye': zhuanye,'clas':clas,'num':num},#}
+            {##表单中的数据#}
+            data: $('#form1').serialize(),
+            dateType: "json", //服务器返回的数据类型
+            async: false,
+            beforeSend: function (xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            },
+            success: function (data) {
+                var id_s = $("#id_s").val()
+                obj = document.getElementById('tr' + id_s)
+
+                obj.getElementsByTagName('td')[1].innerHTML = $("#name_").val()
+                obj.getElementsByTagName('td')[2].innerHTML = $("#jiage").val()
+                obj.getElementsByTagName('td')[3].innerHTML = $("#num").val()
+                obj.getElementsByTagName('td')[4].innerHTML = $("#addtime").val()
+                obj.getElementsByTagName('td')[5].innerHTML = $("#adduser").val()
+                {#alert(obj)#}
+                if (data.status == 0) {
+                    alert(id + $("#name_").val() + "修改成功");
+
+                    {#window.location.reload();//刷新当前页面.#}
+                }
+            },
+        });
+    }
+
+
+    function fanhui() {
+        div1 = document.getElementById('div1')
+        div2 = document.getElementById('div2')
+        div2.style.display = 'none'
+        div1.removeAttribute('style')
+
+
+    }
+
+
+    {# 创建（初始化）富文本编辑器 #}
+    KindEditor.ready(function (K) {
+        K.create('textarea[name="content"]', {
+            width: "800px",
+            height: "251px",
+            uploadJson: '/shop_manage/uploads/kindeditor', // 文件上传地址
+        });
+    });
+</script>
+
+
+</body>
+
+</html>

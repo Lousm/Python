@@ -1,0 +1,29 @@
+{% extends 'blog/add.html' %}
+{% block biaoti %}
+    <h3>修改数据</h3>
+{% endblock %}
+
+{% block form %}
+    <form class="form-horizontal" action="{% url 'update' %}" method="post">
+{% endblock %}
+
+{% block name %}
+    <input type="hidden" name="id" value="{{ list.id }}">
+    <input type="text" value="{{ list.name }}" class="form-control" id="inputEmail3" name='name' placeholder="请输入姓名" required="required">
+{% endblock %}
+
+{% block xuehao %}
+    <input type="text" value="{{ list.xuehao }}" class="form-control" id="inputEmail3" name='xuehao' placeholder="请输入学号" required="required">
+{% endblock %}
+
+{% block age %}
+    <input type="text" value="{{ list.age }}" class="form-control" id="inputEmail3" name='age' placeholder="请输入年龄" required="required">
+{% endblock %}
+
+{% block jianjie %}
+    <textarea class="form-control" rows="3" name='jianjie'>{{ list.jianjie }}</textarea>
+{% endblock %}
+
+{% block but %}
+    <button type="submit" class="btn btn-success">保存</button>
+{% endblock %}

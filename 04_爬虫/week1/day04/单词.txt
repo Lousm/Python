@@ -1,0 +1,13 @@
+computational :  adj. 计算的，电脑的mode : n. 模式primitive : n. 原始、基元，是后续操作的基础gigabyte : n. 千兆字节，是数据单位storage : n. 储存体,  仓库retrieve : n. 检索,恢复algorithm :  n. 算法accomplish :  vt. 完成scheme : n. 方案, 计划,
+v. 设计, 体系, 结构,compute :  vt. 计算code : n. 码,密码
+vt. 把...编码halt : v 停止computation : n. 计算，计算方法，计算结果knowledge :  n. 知识,了解declarative : adj. 说明的, 陈述的
+declarative knowledge 陈述性知识imperative : adj. 命令式的,互动的
+imperative knowledge 互动性知识recipe : n. 挂起，暂停evaluate :  vt. 评估,评价square root : 平方根 the square root of a number x
+x的平方根deduce : vt. 演绎,推断capture : vt. 采集,描绘,制作fix : vt. &vi.修理,安装calculator :  n. 计算器decode :  v. 解码, 译解
+[计算机] 译码enigma : n. 谜manipulate : v. [计算机] 操作instruction : n. 指令,说明set : n.集合 predefined set 预设集合arithmetic : n. 算术，运算store : n. (在计算机里)存贮；记忆test : n.vt. 测试execute : vt. [计算机] 执行source : n. 来源 source code 源代码sequence : n. 序列, 一系列, 顺序architecture : n.体系结构abstract : n.简化，抽象computable :  adj. 可计算的mechanism : n. 机制syntax : n. 语法  （规范代码的结构，成分和顺序上正确）static : adj. 静态的ambiguous : adj. 歧义的unpredictable :  adj. 不可预知的intend : v. 打算 （打算使之成为。。。）crash : n 崩溃，停止运行algorithmic :  adj.[计]算法的,规则系统的process : n.过程，进程，步骤computational: adj. 计算的，电脑的mode:n. 模式primitive:n. 原始、基元，是后续操作的基础gigabyte:n. 千兆字节，是数据单位storage:n. 储存体,  仓库retrieve:n. 检索,恢复algorithm: n. 算法accomplish: vt. 完成scheme:n. 方案, 计划,
+v. 设计, 体系, 结构,compute: vt. 计算code:n. 码,密码
+vt. 把...编码halt:v 停止computation:n. 计算，计算方法，计算结果knowledge: n. 知识,了解declarative:adj. 说明的, 陈述的
+declarative knowledge 陈述性知识imperative:adj. 命令式的,互动的
+imperative knowledge 互动性知识recipe:n. 挂起，暂停evaluate: vt. 评估,评价square root:平方根 the square root of a number x
+x的平方根deduce:vt. 演绎,推断capture:vt. 采集,描绘,制作fix:vt. &vi.修理,安装calculator: n. 计算器decode: v. 解码, 译解
+[计算机] 译码enigma:n. 谜manipulate:v. [计算机] 操作instruction:n. 指令,说明set:n.集合 predefined set 预设集合arithmetic:n. 算术，运算store:n. (在计算机里)存贮；记忆test:n.vt. 测试execute:vt. [计算机] 执行source:n. 来源 source code 源代码sequence:n. 序列, 一系列, 顺序architecture:n.体系结构abstract:n.简化，抽象computable: adj. 可计算的mechanism:n. 机制syntax:n. 语法  （规范代码的结构，成分和顺序上正确）static:adj. 静态的ambiguous:adj. 歧义的unpredictable: adj. 不可预知的intend:v. 打算 （打算使之成为。。。）crash:n 崩溃，停止运行algorithmic: adj.[计]算法的,规则系统的process:n.过程，进程，步骤

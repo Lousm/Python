@@ -1,0 +1,237 @@
+<!doctype html>
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>结算</title>
+    {% include 'shop/yangshi.html' %}
+</head>
+
+<body>
+<!-- 公共头部 -->
+<!--头部-->
+<div class="header_w wrap">
+    <div class="header cont">
+        <div class="fl">
+            <font>欢迎来小U商城</font>
+            <a href="#" alt="">请登录</a><span></span>
+            <a href="#" alt="">免费注册</a>
+        </div>
+        <div class="fr header_r">
+            <a href="#" alt="">我的订单</a><span></span>
+            <a href="#" alt="" class="moblieApp">移动APP</a><span></span>
+            <a href="#" alt="">网站地图</a><span></span>
+            <a href="#" alt="" class="paddingR0">退出</a>
+            <div class="mobileApp_QR">
+                <img src="{% static 'shop/images/mobileApp_QR.jpg' %}" width="140" height="141">
+                <a href="#" class="iphone"><i></i>iphone下载</a>
+                <a href="#" class="android"><i></i>Android下载</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--头部 end -->
+
+<!--头部 end -->
+
+<div class="order_head_info cont clearfix">
+    <a href="#" alt="" class="fl"><img src="{% static 'shop/images/u_logo.jpg' %}" width="210" height="42"></a><span
+        class="header_title">结算页</span>
+    <div class="order_pro clearfix">
+        <span class="pro_pre"><b>1</b>我的购物车</span>
+        <span class="pro_active"><b>2</b>提交结算</span>
+        <span class="pro_next"><b>3</b>提交成功</span>
+    </div>
+</div>
+
+<!--  订单确认页面 -->
+<div class="U_ddxx cont">
+    <div class="U_ddbt">填写并核对订单信息</div>
+    <div class="U_ddb">
+        <div class="U_shdz">
+            <h4><a href="javascript:void(0);" class="addAddressBtn">新增收货地址</a>收货地址</h4>
+            <ul>
+                {% for datum in data %}
+                    <li {% if datum.status == 1 %}
+                        class="default_address"
+                    {% endif %}>
+                        <font>{% if datum.status != 1 %}
+                            <i class="order2_defalteSet">设为默认地址</i>
+                        {% endif %}<a href="#" target="_blank">编辑</a><a href="javascript:void(0);"
+                                                                        class="cancle_address_b">删除</a></font>
+                        <span {% if datum.status == 1 %}
+                            class="u_xz"
+                        {% endif %}>{{ datum.userid.username }}
+                            {% if datum.status == 1 %}
+                                <i class="selected_icon"></i>
+                            {% endif %}</span>
+                        <p>{{ datum.Address }} {{ datum.userid.phone }}</p>
+                        {% if datum.status == 1 %}
+                            <em>默认地址</em>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+
+        </div>
+
+        <div class="U_mjly">
+            <h4>买家留言</h4>
+            <div class="U_lynr">
+                <span>留言内容：</span>
+                <textarea class="focusBorder"></textarea>
+                <font>0/200</font>
+            </div>
+        </div>
+
+        <div class="U_spqd">
+            <h4>商品清单</h4>
+            <table width="1125">
+                <tr>
+                    <th width="40%">商品
+                    </td>
+                    <th width="20%">单价
+                    </td>
+                    <th width="20%">购买数量
+                    </td>
+                    <th width="20%">小计
+                    </td>
+                </tr>
+                {% for cart in goods %}
+                    <tr>
+                        <td>
+                            <div class="list_goods">
+                                <a href="#"><img src="{{ cart.commodity_id.commodity_img_set.filter.first.path }}" width="66" height="66"></a>
+                                <p class="list_goods_name"><a href="#">{{ cart.commodity_id.name }}</a>
+                                </p>
+                                <p class="list_goods_details"></p>
+                            </div>
+                        </td>
+                        <td>￥{{ cart.commodity_id.price }}</td>
+                        <td>{{ cart.number }}</td>
+                        <td><font class="colorB11">{% widthratio cart.commodity_id.price 1 cart.number %}</font></td>
+                    </tr>
+                {% endfor %}
+
+
+            </table>
+        </div>
+        <div class="order2_b clearfix">
+            <p>商品总金额：<span>￥{{ zongjia }}</span></p>
+            <p><b>应付总金额：</b><font class="totalPrice">￥{{ zongjia }}</font></p>
+            <a href={% url 'jiesuan2_shop' %} class="hover_btn2" onclick="tijiao()">提交订单</a>
+        </div>
+    </div>
+
+</div>
+
+<div class="fixed_shadow_w">
+    <div class="fixed_shadow"></div>
+    <div class="cancel_address fixed_shadow_c">
+        <p class="fixed_shadow_ct"><i class="fixed_close pay_info_close">&nbsp;</i>删除收货人信息</p>
+        <p class="cancel_address_m fixed_shadow_cm"><i>&nbsp;</i>您确定要删除该收货地址吗？</p>
+        <p class="cancel_address_b fixed_shadow_cb">
+            <label class="fixed_iptW"><input type="submit" value="确定" class="fixed_ipt"></label>
+            <label class="fixed_iptW"><input type="submit" value="取消" class="fixed_ipt"></label>
+        </p>
+    </div>
+    <div class="operateSucc fixed_shadow_c">
+        <p class="fixed_shadow_ct"><i class="fixed_close pay_info_close">&nbsp;</i>提示</p>
+        <p class="operateSucc_m fixed_shadow_cm">操作成功！</p>
+        <p class="operateSucc_b fixed_shadow_cb">
+            <label class="fixed_iptW"><input type="submit" value="确定" class="fixed_ipt"></label>
+        </p>
+    </div>
+    <div class="addAddress fixed_shadow_c">
+        <p class="fixed_shadow_ct"><i class="fixed_close pay_info_close">&nbsp;</i>新增收货地址</p>
+        <div class="addAddress_m fixed_shadow_cm">
+            <table>
+                <tr>
+                    <th><span class="redStar">*</span> 收货人：</th>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <th><span class="redStar">*</span> 地址：</th>
+                    <td>
+                        <div class="model_select model_select1" id="js_modelSelect">
+                            <div class="select_c">
+                                <div class="select_cs"></div>
+                                <ul class="select_so">
+                                    <li value="1" onclick="getcontent(this)">1</li>
+                                    <li>2</li>
+                                    <li>3</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="model_select model_select2">
+                            <div class="select_c">
+                                <div class="select_cs"></div>
+                                <ul class="select_so">
+                                    <li value="1" onclick="getcontent(this)">1</li>
+                                    <li>2</li>
+                                    <li>3</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="model_select model_select3">
+                            <div class="select_c">
+                                <div class="select_cs"></div>
+                                <ul class="select_so">
+                                    <li value="1" onclick="getcontent(this)">1</li>
+                                    <li>2</li>
+                                    <li>3</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <th><span class="redStar">*</span> 详细地址：</th>
+                    <td><textarea></textarea></td>
+                </tr>
+                <tr>
+                    <th><span class="redStar">*</span> 手机：</th>
+                    <td><input type="text"></td>
+                </tr>
+                <tr>
+                    <th>邮编：</th>
+                    <td><input type="text"></td>
+                </tr>
+            </table>
+        </div>
+        <p class="addAddress_b fixed_shadow_cb">
+            <label class="fixed_iptW"><input type="submit" value="确定" class="fixed_ipt"></label>
+        </p>
+    </div>
+</div>
+<!-- footer  -->
+{% include 'shop/footer.html' %}
+
+<script>
+    function tijiao() {
+        $.ajax({
+            cache: false,
+            type: "POST",
+            url: "/shop/add_order_form/",
+            data: {'id': 1},
+            {##表单中的数据#}
+            {#data: $('#form1').serialize(),#}
+            dateType: "json", //服务器返回的数据类型
+            async: false,
+            beforeSend: function (xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            },
+            success: function (data) {
+                if (data.data == 0) {
+                    {#alert('添加成功')#}
+                }
+
+            },
+        });
+    }
+    
+</script>
+</body>
+</html>

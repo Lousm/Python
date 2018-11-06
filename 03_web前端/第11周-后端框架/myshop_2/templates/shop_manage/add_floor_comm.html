@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <title>楼层</title>
+    {% include 'shop_manage/yangshi.html' %}
+</head>
+
+<body>
+<div class="x-body layui-anim layui-anim-up">
+    <form class="layui-form" method="post" action="{% url 'do_add_floor_comm_shop_manage' %}">
+        <div class="layui-form-item">
+            <label for="L_email" class="layui-form-label">
+                <span class="x-red">*</span>楼层
+            </label>
+            <div class="layui-input-inline">
+                <select name="floor_id">
+                    <option value="0">请选择</option>
+                    {% for foo in floor %}
+                        <option value={{ foo.id }}>{{ foo.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="L_email" class="layui-form-label">
+                商品
+            </label>
+            <div class="layui-input-inline">
+                <select name="comm_id" >
+                    <option value="0">请选择</option>
+                    {% for com in comm %}
+                        <option value={{ com.id }}>{{ com.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="L_email" class="layui-form-label">
+                排序
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="L_email" name="paixu" required=""
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="L_repass" class="layui-form-label">
+            </label>
+            <button class="layui-btn" lay-filter="add" lay-submit="">
+                增加
+            </button>
+
+        </div>
+        {% csrf_token %}
+    </form>
+</div>
+
+
+</body>
+
+
+</html>

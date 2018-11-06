@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>检测</title>
+</head>
+<body>
+     {% if not request.session.username %}
+         <script>
+            window.location.href=" {% url 'login' %}"
+            alert('您还没登陆')
+         </script>
+        {% endif %}
+</body>
+</html>
